@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="900.0" styleClass="mainPaneBackground" stylesheets="@../sheets/space.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.animal_clinic.controller.SubDashBoardFormController">
+    <children>
+        <Pane fx:id="paneCustomerCount" layoutX="61.0" layoutY="95.0" prefHeight="100.0" prefWidth="200.0" styleClass="subDashBoardPaneSubPane" stylesheets="@../sheets/space.css">
+            <children>
+                <Label layoutX="15.0" layoutY="14.0" text="Customers Count :" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblCustomerCount" layoutX="83.0" layoutY="43.0" text="10" textFill="WHITE">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Pane fx:id="paneDoctorsCount" layoutX="605.0" layoutY="95.0" prefHeight="100.0" prefWidth="200.0" styleClass="subDashBoardPaneSubPane" stylesheets="@../sheets/space.css">
+            <children>
+                <Label layoutX="10.0" layoutY="9.0" text="Doctors Count :" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblDoctorCount" layoutX="80.0" layoutY="36.0" text="03" textFill="WHITE">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Pane fx:id="panePetsCount" layoutX="333.0" layoutY="95.0" prefHeight="100.0" prefWidth="200.0" styleClass="subDashBoardPaneSubPane" stylesheets="@../sheets/space.css">
+            <children>
+                <Label layoutX="9.0" layoutY="12.0" text="Pets Count :" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblPetCount" layoutX="85.0" layoutY="40.0" text="11" textFill="WHITE">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Label fx:id="lblTime" layoutX="740.0" layoutY="36.0" style="-fx-font-weight: 900;" text="Label" textFill="#00ffdd">
+            <font>
+                <Font name="System Bold" size="25.0" />
+            </font>
+        </Label>
+        <Pane fx:id="paneParagraph" layoutX="57.0" layoutY="230.0" prefHeight="381.0" prefWidth="484.0" styleClass="subDashBoardPaneSubPane" stylesheets="@../sheets/space.css">
+            <children>
+                <Label layoutX="20.0" layoutY="13.0" text="Welcome to Animal Clinic Akuressa! " textFill="#42ffe9">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="18.0" layoutY="46.0" text="Our dedicated software is designed to streamline and " textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Label layoutX="18.0" layoutY="82.0" text="enhance your veterinary experience. With user-friendly" textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Label layoutX="18.0" layoutY="119.0" text=" features and a comprehensive interface, managing your " textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Label layoutX="18.0" layoutY="154.0" text="animal clinic has never been easier. From scheduling " textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Label layoutX="20.0" layoutY="190.0" text="appointments and tracking patient histories to simplifying " textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Label layoutX="20.0" layoutY="224.0" text="billing processes, Animal Clinic Akuressa is your all-in-one" textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Label layoutX="20.0" layoutY="258.0" text=" solution for efficient and effective veterinary care.Stay " textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Label layoutX="20.0" layoutY="288.0" text="organized, save time, and provide the best possible care for" textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Label layoutX="20.0" layoutY="321.0" text="your furry patients with our intuitive dashboard." textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Pane fx:id="paneImage" layoutX="600.0" layoutY="227.0" prefHeight="383.0" prefWidth="195.0" style="-fx-background-radius: 20px;" styleClass="subDashBoardPaneSubPane" stylesheets="@../sheets/space.css">
+            <children>
+                <ImageView fitHeight="400.0" fitWidth="255.0" layoutX="-42.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/veterinarian-taking-care-pet-dog.jpg" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

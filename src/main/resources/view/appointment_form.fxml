@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="900.0" styleClass="mainPaneBackground" stylesheets="@../sheets/space.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.animal_clinic.controller.AppointmentFormController">
+   <children>
+      <AnchorPane layoutX="50.0" layoutY="51.0" prefHeight="614.0" prefWidth="800.0" styleClass="subPaneBackground" stylesheets="@../sheets/space.css">
+         <children>
+            <Label layoutX="475.0" layoutY="227.0" prefHeight="32.0" prefWidth="197.0" text="Time to Come :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="235.0" layoutY="18.0" prefHeight="43.0" prefWidth="377.0" text="Appointment Mange" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="111.0" layoutY="153.0" prefHeight="32.0" prefWidth="152.0" text="Appointment Id :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="107.0" layoutY="231.0" prefHeight="32.0" prefWidth="105.0" text=" Date:" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="469.0" layoutY="173.0" prefHeight="32.0" prefWidth="105.0" text="doctor Id :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="566.0" layoutY="66.0" prefHeight="32.0" prefWidth="98.0" text="pet Id :" textFill="#fffdfd">
+               <font>
+                  <Font name="Arial Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtId" layoutX="107.0" layoutY="181.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <TextField fx:id="txtTime" layoutX="473.0" layoutY="254.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="190.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <DatePicker fx:id="txtDate" layoutX="107.0" layoutY="257.0" prefHeight="32.0" prefWidth="221.0" stylesheets="@../sheets/space.css" />
+            <JFXButton fx:id="btnUpdate" contentDisplay="RIGHT" layoutX="439.0" layoutY="310.0" onAction="#btnUpdateOnAction" prefHeight="32.0" prefWidth="90.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete" contentDisplay="RIGHT" layoutX="554.0" layoutY="310.0" onAction="#btnDeleteOnAction" prefHeight="32.0" prefWidth="90.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Delete" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnClear" contentDisplay="RIGHT" layoutX="667.0" layoutY="310.0" onAction="#btnClearOnAction" prefHeight="32.0" prefWidth="90.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Clear" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnSave" contentDisplay="RIGHT" layoutX="325.0" layoutY="310.0" onAction="#btnSaveOnAction" prefHeight="32.0" prefWidth="90.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <TableView fx:id="tblAppointment" layoutX="40.0" layoutY="360.0" prefHeight="229.0" prefWidth="718.0">
+               <columns>
+                  <TableColumn fx:id="colAppId" prefWidth="100.8878173828125" text="AppId" />
+                  <TableColumn fx:id="colDate" prefWidth="99.61213684082031" text="Date" />
+                  <TableColumn fx:id="colTime" prefWidth="116.90811157226562" text="Time" />
+                  <TableColumn fx:id="colDoctorId" prefWidth="121.01666259765625" text="DoctorId" />
+                  <TableColumn fx:id="colPetId" prefWidth="113.01303100585938" text="PetId" />
+                  <TableColumn fx:id="colNumber" prefWidth="166.22430419921875" text="Number " />
+               </columns>
+            </TableView>
+            <JFXComboBox fx:id="cmbPetId" layoutX="636.0" layoutY="64.0" onAction="#cmbPetIdOnAction" prefHeight="24.0" prefWidth="131.0" />
+            <JFXComboBox fx:id="cmbDoctorId" layoutX="571.0" layoutY="171.0" onAction="#cmbDoctorIdOnAction" prefHeight="24.0" prefWidth="188.0" />
+            <TextField fx:id="txtNumber" layoutX="48.0" layoutY="44.0" prefHeight="83.0" prefWidth="118.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </TextField>
+            <Label layoutX="50.0" layoutY="10.0" prefHeight="32.0" prefWidth="152.0" text="Number :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnReport" contentDisplay="RIGHT" layoutX="40.0" layoutY="320.0" onAction="#btnReportOnAction" prefHeight="32.0" prefWidth="118.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="View Report" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

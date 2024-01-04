@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="900.0" styleClass="mainPaneBackground" stylesheets="@../sheets/space.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.animal_clinic.controller.SupplierFormController">
+   <children>
+      <AnchorPane layoutX="50.0" layoutY="40.0" prefHeight="614.0" prefWidth="800.0" styleClass="subPaneBackground" stylesheets="@../sheets/space.css">
+         <children>
+            <Label layoutX="529.0" layoutY="44.0" prefHeight="32.0" prefWidth="130.0" text="Stock Id :" textFill="#171717">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtSupliyerId" layoutX="93.0" layoutY="116.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <Label layoutX="97.0" layoutY="89.0" prefHeight="32.0" prefWidth="161.0" text="Supliyer Id :" textFill="#eee7e7">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtName" layoutX="451.0" layoutY="115.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <Label layoutX="457.0" layoutY="88.0" prefHeight="32.0" prefWidth="161.0" text="Supliyer Name :" textFill="#f5eded">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtAdress" layoutX="94.0" layoutY="182.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <Label layoutX="99.0" layoutY="155.0" prefHeight="32.0" prefWidth="161.0" text="Supliyer Address :" textFill="#f2ecec">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtTel" layoutX="454.0" layoutY="181.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <Label layoutX="457.0" layoutY="154.0" prefHeight="32.0" prefWidth="161.0" text="Supliyer Tel :" textFill="#f5f0f0">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtEmail" layoutX="101.0" layoutY="254.0" onAction="#txtSearchOnAction" prefHeight="37.0" prefWidth="581.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <Label layoutX="102.0" layoutY="225.0" prefHeight="32.0" prefWidth="161.0" text="Supliyer Email :" textFill="#ebe3e3">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnSave" contentDisplay="RIGHT" layoutX="423.0" layoutY="319.0" onAction="#btnSaveOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete" buttonType="RAISED" contentDisplay="RIGHT" layoutX="499.0" layoutY="319.0" onAction="#btnDeleteOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons2" stylesheets="@../sheets/space.css" text="Delete" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnUpdate" buttonType="RAISED" contentDisplay="RIGHT" layoutX="580.0" layoutY="319.0" onAction="#btnUpdateOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnClear" buttonType="RAISED" contentDisplay="RIGHT" layoutX="658.0" layoutY="319.0" onAction="#btnClearOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons2" stylesheets="@../sheets/space.css" text="Clear" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <TableView fx:id="tblSupliyer" layoutX="12.0" layoutY="358.0" prefHeight="177.0" prefWidth="777.0">
+               <columns>
+                  <TableColumn fx:id="colSupliyerId" prefWidth="102.33332824707031" text="Supliyer Id" />
+                  <TableColumn fx:id="colSupliyerName" prefWidth="140.33334350585938" text="Supliyer Name " />
+                  <TableColumn fx:id="colSupliyerAddress" prefWidth="139.0" text="Supliyer Address " />
+                  <TableColumn fx:id="colSupliyerTel" prefWidth="125.33331298828125" text="Supliyer Tel" />
+                  <TableColumn fx:id="colSupliyerEmail" prefWidth="126.0" text="Supliyer Email" />
+                  <TableColumn fx:id="colStockId" prefWidth="126.0" text="Stock Id" />
+               </columns>
+            </TableView>
+            <Label layoutX="280.0" layoutY="10.0" prefHeight="43.0" prefWidth="248.0" text=" Supliyer Manage" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="24.0" />
+               </font>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color opacity="0.5468451380729675" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Label>
+            <JFXComboBox fx:id="cmbStockId" layoutX="606.0" layoutY="40.0" onAction="#cmbStockIdOnAction" prefHeight="24.0" prefWidth="134.0" unFocusColor="#1e1e1e" />
+         </children>
+      </AnchorPane>
+      <JFXButton fx:id="btnBack" layoutX="727.0" layoutY="591.0" onAction="#btnBackOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Back">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="12.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

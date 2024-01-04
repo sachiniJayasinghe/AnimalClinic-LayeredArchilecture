@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="900.0" styleClass="mainPaneBackground" stylesheets="@../sheets/space.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.animal_clinic.controller.CustomerFormController">
+   <children>
+      <AnchorPane fx:id="subsubPane" layoutX="50.0" layoutY="40.0" prefHeight="614.0" prefWidth="800.0" styleClass="subPaneBackground" stylesheets="@../sheets/space.css">
+         <children>
+            <TextField fx:id="txtTel" layoutX="83.0" layoutY="169.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <TextField fx:id="txtName" layoutX="515.0" layoutY="106.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <Label layoutX="520.0" layoutY="139.0" prefHeight="32.0" prefWidth="192.0" text="Customer Email :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="88.0" layoutY="202.0" prefHeight="32.0" prefWidth="202.0" text="Customer Address :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="518.0" layoutY="79.0" prefHeight="32.0" prefWidth="192.0" text="Customer Name :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="276.0" layoutY="18.0" prefHeight="43.0" prefWidth="353.0" text="Customer Manage" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color opacity="0.5468451380729675" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Label>
+            <Label layoutX="90.0" layoutY="83.0" prefHeight="32.0" prefWidth="161.0" text="Customer Id :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="90.0" layoutY="143.0" prefHeight="32.0" prefWidth="192.0" text="Customer Tel :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtId" layoutX="80.0" layoutY="110.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <TextField fx:id="txtEmail" layoutX="517.0" layoutY="166.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <TextField fx:id="txtAddress" layoutX="82.0" layoutY="230.0" onAction="#txtSearchOnAction" prefHeight="37.0" prefWidth="660.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <JFXButton fx:id="btnBack" layoutX="713.0" layoutY="566.0" onAction="#btnBackOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Back">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnClear" buttonType="RAISED" contentDisplay="RIGHT" layoutX="639.0" layoutY="291.0" onAction="#btnClearOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons2" stylesheets="@../sheets/space.css" text="Clear" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnUpdate" buttonType="RAISED" contentDisplay="RIGHT" layoutX="572.0" layoutY="290.0" onAction="#btnUpdateOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete" buttonType="RAISED" contentDisplay="RIGHT" layoutX="504.0" layoutY="290.0" onAction="#btnDeleteOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons2" stylesheets="@../sheets/space.css" text="Delete" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnSave" contentDisplay="RIGHT" layoutX="433.0" layoutY="290.0" onAction="#btnSaveOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <TableView fx:id="tblCustomer" layoutX="57.0" layoutY="332.0" prefHeight="217.0" prefWidth="711.0">
+               <columns>
+                  <TableColumn fx:id="colId" prefWidth="118.33334350585938" text="Id" />
+                  <TableColumn fx:id="colName" prefWidth="118.66665649414062" text="Name" />
+                  <TableColumn fx:id="colTel" prefWidth="170.0" text="Tel" />
+                  <TableColumn fx:id="colEmail" prefWidth="161.6666259765625" text="Email" />
+                  <TableColumn fx:id="colAddress" prefWidth="158.3333740234375" text="Address" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

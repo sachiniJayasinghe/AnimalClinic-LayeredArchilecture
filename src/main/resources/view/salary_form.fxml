@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="900.0" styleClass="mainPaneBackground" stylesheets="@../sheets/space.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.animal_clinic.controller.SalaryFormController">
+   <children>
+      <AnchorPane layoutX="50.0" layoutY="40.0" prefHeight="614.0" prefWidth="800.0" styleClass="subPaneBackground" stylesheets="@../sheets/space.css">
+         <children>
+            <Label layoutX="265.0" layoutY="19.0" prefHeight="43.0" prefWidth="308.0" text="Salary Manage" textFill="#110e0e">
+               <font>
+                  <Font name="Arial Bold" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtSalaryId" layoutX="99.0" layoutY="139.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="253.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <Label layoutX="575.0" layoutY="63.0" prefHeight="32.0" prefWidth="69.0" text="Emp Id :" textFill="#1e1d1d">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtMonths" layoutX="105.0" layoutY="232.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="253.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <DatePicker fx:id="txtDate" layoutX="442.0" layoutY="137.0" onAction="#txtSearchOnAction" prefHeight="32.0" prefWidth="247.0" />
+            <Label layoutX="445.0" layoutY="112.0" prefHeight="32.0" prefWidth="76.0" text="Date :" textFill="#fffdfd">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="109.0" layoutY="203.0" prefHeight="32.0" prefWidth="133.0" text="Salary months :" textFill="#fcf8f8">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnSave" contentDisplay="RIGHT" layoutX="414.0" layoutY="292.0" onAction="#btnSaveOnAction" prefHeight="25.0" prefWidth="79.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete" contentDisplay="RIGHT" layoutX="586.0" layoutY="294.0" onAction="#btnDeleteOnAction" prefHeight="25.0" prefWidth="75.0" styleClass="subPane-Buttons2" stylesheets="@../sheets/space.css" text="Delete" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnUpdate" contentDisplay="RIGHT" layoutX="505.0" layoutY="292.0" onAction="#btnUpdateOnAction" prefHeight="25.0" prefWidth="72.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnClear" buttonType="RAISED" contentDisplay="RIGHT" layoutX="672.0" layoutY="294.0" onAction="#btnClearOnAction" prefHeight="25.0" prefWidth="72.0" styleClass="subPane-Buttons2" stylesheets="@../sheets/space.css" text="Clear" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <TableView fx:id="tblSalary" layoutX="32.0" layoutY="343.0" prefHeight="236.0" prefWidth="742.0">
+               <columns>
+                  <TableColumn fx:id="colSalaryId" prefWidth="119.00001525878906" text="Salary Id " />
+                  <TableColumn fx:id="colDate" prefWidth="143.0" text="Date" />
+                  <TableColumn fx:id="colSalaryMonths" prefWidth="167.0" text="Salary Months" />
+                  <TableColumn fx:id="colEmpId" prefWidth="127.66668701171875" text="Emp Id" />
+                  <TableColumn fx:id="colSalaryAmount" prefWidth="183.33331298828125" text="Salary amount" />
+               </columns>
+            </TableView>
+            <Label layoutX="108.0" layoutY="114.0" prefHeight="32.0" prefWidth="129.0" text="Salary Id :" textFill="#fffefe">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <JFXComboBox fx:id="cmbEmpId" layoutX="644.0" layoutY="62.0" onAction="#cmbEmpIdOnAction" prefHeight="24.0" prefWidth="115.0" />
+            <TextField fx:id="txtSalaryAmount" layoutX="442.0" layoutY="228.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="253.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <Label layoutX="445.0" layoutY="203.0" prefHeight="32.0" prefWidth="133.0" text="Salary amount :" textFill="#fffbfb">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

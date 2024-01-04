@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.animal_clinic.controller.DoctorFormController">
+   <children>
+      <AnchorPane prefHeight="800.0" prefWidth="900.0" styleClass="mainPaneBackground" stylesheets="@../sheets/space.css">
+         <children>
+            <AnchorPane layoutX="50.0" layoutY="40.0" prefHeight="614.0" prefWidth="800.0" styleClass="subPaneBackground" stylesheets="@../sheets/space.css">
+               <children>
+                  <Label layoutX="85.0" layoutY="146.0" prefHeight="32.0" prefWidth="161.0" text="Doctor Tel :" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="tblDoctor" layoutX="20.0" layoutY="364.0" prefHeight="233.0" prefWidth="766.0">
+                     <columns>
+                        <TableColumn fx:id="colDoctorId" text="doctorId" />
+                        <TableColumn fx:id="colDoctorName" prefWidth="103.0" text="doctorName" />
+                        <TableColumn fx:id="colDoctorTel" prefWidth="122.5" text="doctorTel" />
+                        <TableColumn fx:id="colDoctorEmail" prefWidth="148.5" text="doctorEmail" />
+                        <TableColumn fx:id="colDoctorAddress" prefWidth="122.0" text="doctorAddress" />
+                        <TableColumn fx:id="colComeInTime" prefWidth="93.0" text="Come In Time" />
+                        <TableColumn fx:id="colOutTime" prefWidth="96.0" text="Out Time" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="250.0" layoutY="10.0" prefHeight="43.0" prefWidth="377.0" text="Doctor Manage" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="85.0" layoutY="80.0" prefHeight="32.0" prefWidth="161.0" text="Doctor Id :" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="470.0" layoutY="146.0" prefHeight="32.0" prefWidth="161.0" text="Doctor Email :" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtId" layoutX="82.0" layoutY="108.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css">
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.2596856653690338" green="0.6126492619514465" blue="0.6447368264198303" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtName" layoutX="470.0" layoutY="108.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css">
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.2596856653690338" green="0.6126492619514465" blue="0.6447368264198303" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </TextField>
+                  <Label layoutX="88.0" layoutY="214.0" prefHeight="32.0" prefWidth="178.0" text="Doctor Address :" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtTel" layoutX="85.0" layoutY="177.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css">
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.2596856653690338" green="0.6126492619514465" blue="0.6447368264198303" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtEmail" layoutX="467.0" layoutY="177.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="230.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css">
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.2596856653690338" green="0.6126492619514465" blue="0.6447368264198303" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtAddress" layoutX="85.0" layoutY="242.0" onAction="#txtSearchOnAction" prefHeight="43.0" prefWidth="231.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css">
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.2596856653690338" green="0.6126492619514465" blue="0.6447368264198303" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </TextField>
+                  <JFXButton fx:id="btnClear" contentDisplay="RIGHT" layoutX="441.0" layoutY="320.0" onAction="#btnClearOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Clear" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btnUpdate" contentDisplay="RIGHT" layoutX="521.0" layoutY="320.0" onAction="#btnUpdateOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Update" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btnDelete" contentDisplay="RIGHT" layoutX="600.0" layoutY="320.0" onAction="#btnDeleteOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Delete" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="btnSave" contentDisplay="RIGHT" layoutX="683.0" layoutY="320.0" onAction="#btnSaveOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Save" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <Label layoutX="473.0" layoutY="80.0" prefHeight="32.0" prefWidth="161.0" text="Doctor Name :" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtComeInTime" layoutX="378.0" layoutY="244.0" prefHeight="43.0" prefWidth="150.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css">
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.2596856653690338" green="0.6126492619514465" blue="0.6447368264198303" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="txtOutTime" layoutX="544.0" layoutY="244.0" prefHeight="43.0" prefWidth="150.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css">
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.2596856653690338" green="0.6126492619514465" blue="0.6447368264198303" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </TextField>
+                  <Label layoutX="378.0" layoutY="214.0" prefHeight="32.0" prefWidth="178.0" text="Come In Time :" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="544.0" layoutY="214.0" prefHeight="32.0" prefWidth="178.0" text="Out Time :" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

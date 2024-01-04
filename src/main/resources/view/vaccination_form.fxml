@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="900.0" styleClass="mainPaneBackground" stylesheets="@../sheets/space.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.animal_clinic.controller.VaccinationFormController">
+   <children>
+      <AnchorPane layoutX="50.0" layoutY="40.0" prefHeight="614.0" prefWidth="800.0" styleClass="subPaneBackground" stylesheets="@../sheets/space.css">
+         <children>
+            <Label layoutX="275.0" layoutY="20.0" prefHeight="43.0" prefWidth="308.0" text="Vaccination Manage" textFill="#110e0e">
+               <font>
+                  <Font name="Arial Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="90.0" layoutY="140.0" prefHeight="32.0" prefWidth="161.0" text="Vaccination Name :" textFill="#1e1d1d">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnSave" contentDisplay="RIGHT" layoutX="405.0" layoutY="278.0" onAction="#btnSaveOnAction" prefHeight="25.0" prefWidth="79.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnClear" buttonType="RAISED" contentDisplay="RIGHT" layoutX="693.0" layoutY="278.0" onAction="#btnClearOnAction" prefHeight="25.0" prefWidth="72.0" styleClass="subPane-Buttons2" stylesheets="@../sheets/space.css" text="Clear" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <DatePicker fx:id="txtDate" layoutX="245.0" layoutY="197.0" onAction="#txtSearchOnAction" prefHeight="32.0" prefWidth="247.0" />
+            <TableView fx:id="tblVaccination" layoutX="135.0" layoutY="336.0" prefHeight="200.0" prefWidth="532.0">
+               <columns>
+                  <TableColumn fx:id="colVaccinationId" prefWidth="163.0" text="Vaccination Id" />
+                  <TableColumn fx:id="colVaccinationName" minWidth="0.33331298828125" prefWidth="189.66668701171875" text="Vaccination Name " />
+                  <TableColumn fx:id="colNextDueDate" minWidth="0.33331298828125" prefWidth="189.66668701171875" text=" Next DueDate " />
+               </columns>
+            </TableView>
+            <JFXButton fx:id="btnUpdate" contentDisplay="RIGHT" layoutX="506.0" layoutY="279.0" onAction="#btnUpdateOnAction" prefHeight="25.0" prefWidth="72.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete" contentDisplay="RIGHT" layoutX="600.0" layoutY="279.0" onAction="#btnDeleteOnAction" prefHeight="25.0" prefWidth="75.0" styleClass="subPane-Buttons2" stylesheets="@../sheets/space.css" text="Delete" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label layoutX="91.0" layoutY="192.0" prefHeight="32.0" prefWidth="161.0" text="Next DueDate :" textFill="#1e1d1d">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtVaccinationName" layoutX="243.0" layoutY="143.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="253.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <TextField fx:id="txtVaccinationId" layoutX="241.0" layoutY="87.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="253.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <Label layoutX="93.0" layoutY="95.0" prefHeight="32.0" prefWidth="161.0" text="Vaccination Id :" textFill="#1e1d1d">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <JFXButton fx:id="btnBack" layoutX="735.0" layoutY="589.0" onAction="#btnBackOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Back">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="12.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

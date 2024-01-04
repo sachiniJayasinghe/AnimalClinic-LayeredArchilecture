@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="744.0" prefWidth="900.0" style="-fx-background-color: #8ecae6" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.animal_clinic.controller.EditProfileFormController">
+    <children>
+        <Pane fx:id="paneImg" layoutX="334.0" layoutY="58.0" prefHeight="200.0" prefWidth="150.0">
+            <children>
+                <ImageView fx:id="img" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                </ImageView>
+            </children>
+        </Pane>
+        <JFXButton fx:id="btnUpdate" contentDisplay="RIGHT" layoutX="730.0" layoutY="517.0" onAction="#btnUpdateOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Update" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="10.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </JFXButton>
+        <TextField fx:id="txtUserName" layoutX="292.0" layoutY="327.0" prefHeight="37.0" prefWidth="449.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css">
+            <effect>
+                <DropShadow>
+                    <color>
+                        <Color red="0.2596856653690338" green="0.6126492619514465" blue="0.6447368264198303" />
+                    </color>
+                </DropShadow>
+            </effect>
+        </TextField>
+        <TextField fx:id="txtAddress" layoutX="292.0" layoutY="392.0" prefHeight="37.0" prefWidth="449.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css">
+            <effect>
+                <DropShadow>
+                    <color>
+                        <Color red="0.2596856653690338" green="0.6126492619514465" blue="0.6447368264198303" />
+                    </color>
+                </DropShadow>
+            </effect>
+        </TextField>
+        <Label layoutX="141.0" layoutY="334.0" prefHeight="32.0" prefWidth="161.0" text="User Name :">
+            <font>
+                <Font name="Arial Bold Italic" size="15.0" />
+            </font>
+        </Label>
+        <Label layoutX="145.0" layoutY="399.0" prefHeight="32.0" prefWidth="161.0" text="Address">
+            <font>
+                <Font name="Arial Bold Italic" size="15.0" />
+            </font>
+        </Label>
+        <TextField fx:id="txtEmail" layoutX="292.0" layoutY="454.0" prefHeight="37.0" prefWidth="449.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css">
+            <effect>
+                <DropShadow>
+                    <color>
+                        <Color red="0.2596856653690338" green="0.6126492619514465" blue="0.6447368264198303" />
+                    </color>
+                </DropShadow>
+            </effect>
+        </TextField>
+        <Label layoutX="144.0" layoutY="456.0" prefHeight="32.0" prefWidth="161.0" text="Email :">
+            <font>
+                <Font name="Arial Bold Italic" size="15.0" />
+            </font>
+        </Label>
+        <JFXButton fx:id="btnChoosseImg" contentDisplay="RIGHT" layoutX="517.0" layoutY="233.0" onAction="#btnChoosseImgOnAction" prefHeight="25.0" prefWidth="105.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Choose Image" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="10.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </JFXButton>
+    </children>
+</AnchorPane>

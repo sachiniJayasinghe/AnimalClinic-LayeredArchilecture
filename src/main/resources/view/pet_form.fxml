@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="900.0" styleClass="mainPaneBackground" stylesheets="@../sheets/space.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.animal_clinic.controller.PetFormController">
+   <children>
+      <AnchorPane fx:id="subPane" layoutX="50.0" layoutY="40.0" prefHeight="614.0" prefWidth="800.0" styleClass="subPaneBackground" stylesheets="@../sheets/space.css">
+         <children>
+            <JFXButton fx:id="btnUpdate" contentDisplay="RIGHT" layoutX="501.0" layoutY="236.0" onAction="#btnUpdateOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label layoutX="322.0" layoutY="12.0" prefHeight="43.0" prefWidth="260.0" text="Pet Manage" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtId" layoutX="78.0" layoutY="111.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="253.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <Label layoutX="83.0" layoutY="85.0" prefHeight="32.0" prefWidth="161.0" text="Pet Id :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="488.0" layoutY="84.0" prefHeight="32.0" prefWidth="161.0" text="Pet Name :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="84.0" layoutY="151.0" prefHeight="32.0" prefWidth="161.0" text="Pet Type :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="491.0" layoutY="147.0" prefHeight="32.0" prefWidth="161.0" text="Pet Age :" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtType" layoutX="79.0" layoutY="176.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="251.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <TextField fx:id="txtName" layoutX="483.0" layoutY="110.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="251.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <TextField fx:id="txtAge" layoutX="483.0" layoutY="174.0" onAction="#txtSearchOnAction" prefHeight="33.0" prefWidth="251.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css" />
+            <Label layoutX="552.0" layoutY="41.0" prefHeight="32.0" prefWidth="69.0" text="cus Id :" textFill="#0c5257">
+               <font>
+                  <Font name="Arial Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnBack" layoutX="705.0" layoutY="554.0" onAction="#btnBackOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons2" stylesheets="@../sheets/space.css" text="Back">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnSave" contentDisplay="RIGHT" layoutX="643.0" layoutY="237.0" onAction="#btnSaveOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnClear" contentDisplay="RIGHT" layoutX="431.0" layoutY="236.0" onAction="#btnClearOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons2" stylesheets="@../sheets/space.css" text="Clear" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete" contentDisplay="RIGHT" layoutX="572.0" layoutY="237.0" onAction="#btnDeleteOnAction" prefHeight="25.0" prefWidth="60.0" styleClass="subPane-Buttons2" stylesheets="@../sheets/space.css" text="Delete" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <TableView fx:id="tblPet" layoutX="32.0" layoutY="303.0" prefHeight="236.0" prefWidth="735.0">
+               <columns>
+                  <TableColumn fx:id="colPetId" prefWidth="135.66665649414062" text="petId" />
+                  <TableColumn fx:id="colPetName" prefWidth="143.0" text="petName" />
+                  <TableColumn fx:id="colPetType" prefWidth="160.33331298828125" text="petType" />
+                  <TableColumn fx:id="colPetAge" prefWidth="150.0" text="petAge" />
+                  <TableColumn fx:id="colCusId" prefWidth="149.0" text="cusId" />
+               </columns>
+            </TableView>
+            <JFXComboBox fx:id="cmbCusId" focusColor="#4763b9" layoutX="609.0" layoutY="38.0" onAction="#cmbCusIdOnAction" prefHeight="24.0" prefWidth="153.0" unFocusColor="#1e1c1c" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

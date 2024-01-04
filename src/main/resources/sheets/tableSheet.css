@@ -1,0 +1,36 @@
+/* styles.css */
+
+.table-view {
+    -fx-background-color: #f5f5f5;
+}
+
+.table-row-cell {
+    -fx-background-color: #56ADF9;
+    -fx-border-color: #219EBC;
+    -fx-border-width: 0.5;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+.table-column {
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-weight: bold;
+}
+
+.table-view .column-header .label {
+    -fx-background-color: #00505B;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #00505B;
+    -fx-pref-height: 35;
+}
+
+.table-view:focused {
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+}

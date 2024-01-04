@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="mainPane" prefHeight="800.0" prefWidth="900.0" style="-fx-background-color: #257BB3;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.animal_clinic.controller.ProfileDashBoardController">
+    <children>
+        <Button fx:id="btnEditProfile" mnemonicParsing="false" onAction="#btnEditProfileOnAction" prefHeight="56.0" prefWidth="225.0" style="-fx-background-color: #8ecae6;" text="Edit Profile" />
+        <Button fx:id="btnChngPswd" layoutX="225.0" mnemonicParsing="false" onAction="#btnChngPswdOnAction" prefHeight="56.0" prefWidth="225.0" style="-fx-background-color: #8ecae6;" text="Change Password" />
+        <Button fx:id="btnLogOut" layoutX="450.0" mnemonicParsing="false" onAction="#btnLogOutOnAction" prefHeight="56.0" prefWidth="225.0" style="-fx-background-color: #8ecae6;" text="Log out" />
+        <Button fx:id="btnBack" layoutX="675.0" mnemonicParsing="false" onAction="#btnBackOnAction" prefHeight="56.0" prefWidth="225.0" style="-fx-background-color: #8ecae6;" text="Back" textFill="#0d0d0d" />
+        <AnchorPane fx:id="subPane" layoutX="-1.0" layoutY="57.0" prefHeight="744.0" prefWidth="900.0" style="-fx-background-color: #d2e5f5;" />
+    </children>
+</AnchorPane>

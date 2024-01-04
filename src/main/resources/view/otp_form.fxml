@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPane" cache="true" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: linear-gradient(to bottom, #56ADF9, #FFFFFF);" styleClass="background-anchor-pane" stylesheets="@../sheets/space.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.animal_clinic.controller.OTPFormController">
+    <children>
+        <Pane fx:id="bigPane" layoutX="126.0" layoutY="106.0" prefHeight="550.0" prefWidth="500.0" style="-fx-background-color: white;" styleClass="drop-shadow-text" stylesheets="@../sheets/space.css">
+            <children>
+                <TextField fx:id="txtOTP" layoutX="99.0" layoutY="211.0" prefHeight="55.0" prefWidth="289.0" style="-fx-background-color: EDEDED;">
+                    <font>
+                        <Font size="20.0" />
+                    </font></TextField>
+                <Button fx:id="btnNext" layoutX="341.0" layoutY="412.0" mnemonicParsing="false" onAction="#btnNextOnAction" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #56ADF9; -fx-border-color: white; -fx-border-radius: 8; -fx-background-radius: 10;" styleClass="drop-shadow-text" stylesheets="@../sheets/space.css" text="N e x t" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Button>
+                <Label layoutX="129.0" layoutY="39.0" prefHeight="36.0" prefWidth="258.0" style="-fx-font-weight: 900;" text="CONFIRM OTP" textFill="#56adf9">
+                    <font>
+                        <Font name="Arial Bold" size="30.0" />
+                    </font>
+                </Label>
+                <Button fx:id="btnBack" layoutX="233.0" layoutY="412.0" mnemonicParsing="false" onAction="#btnBackOnAction" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #56ADF9; -fx-border-color: white; -fx-border-radius: 8; -fx-background-radius: 10;" styleClass="drop-shadow-text" stylesheets="@../sheets/space.css" text="B a c k" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Button>
+                <Label layoutX="104.0" layoutY="167.0" prefHeight="23.0" prefWidth="189.0" text="ENTER OTP CODE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Pane fx:id="smallPane" layoutX="622.0" layoutY="143.0" prefHeight="469.0" prefWidth="405.0">
+            <children>
+                <ImageView fitHeight="469.0" fitWidth="410.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/close-up-veterinarian-taking-care-dog.jpg" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

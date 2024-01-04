@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPane" prefHeight="800.0" prefWidth="900.0" styleClass="mainPaneBackground" stylesheets="@../sheets/space.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.animal_clinic.controller.InterventionFormController">
+    <children>
+        <Button fx:id="btnVaccination" layoutX="87.0" layoutY="89.0" mnemonicParsing="false" onAction="#btnVaccinationOnAction" prefHeight="102.0" prefWidth="329.0" styleClass="intervention-button" stylesheets="@../sheets/space.css" text="Vaccination">
+            <font>
+                <Font size="20.0" />
+            </font></Button>
+        <Button fx:id="btnThreatment" layoutX="486.0" layoutY="90.0" mnemonicParsing="false" onAction="#btnThreatmentOnAction" prefHeight="102.0" prefWidth="329.0" styleClass="intervention-button" stylesheets="@../sheets/space.css" text="Treatment">
+            <font>
+                <Font size="20.0" />
+            </font></Button>
+        <Label layoutX="295.0" layoutY="35.0" prefHeight="30.0" prefWidth="430.0" text="Intervention Management" textFill="WHITE">
+            <font>
+                <Font name="Arial Bold Italic" size="25.0" />
+            </font>
+        </Label>
+        <AnchorPane fx:id="subPane" layoutX="50.0" layoutY="234.0" prefHeight="442.0" prefWidth="800.0" styleClass="subPaneBackground" stylesheets="@../sheets/space.css">
+            <children>
+                <JFXComboBox fx:id="cmbAppointmentID" focusColor="#eeeeee" labelFloat="true" layoutX="73.0" layoutY="95.0" onAction="#cmbAppointmentIdOnAction" prefHeight="26.0" prefWidth="153.0" promptText="Appointment ID " unFocusColor="WHITE" />
+                <JFXComboBox fx:id="cmbThreatmentName" focusColor="WHITE" labelFloat="true" layoutX="243.0" layoutY="96.0" onAction="#cmbThreatmentNameOnAction" prefHeight="26.0" prefWidth="180.0" promptText="Treatment Name" unFocusColor="WHITE" />
+                <Label layoutX="298.0" layoutY="17.0" prefHeight="23.0" prefWidth="223.0" text="Add Treatments">
+                    <font>
+                        <Font name="Arial Bold Italic" size="20.0" />
+                    </font>
+                </Label>
+                <Button fx:id="btnPay" layoutX="666.0" layoutY="357.0" mnemonicParsing="false" onAction="#btnPayOnAction" prefHeight="26.0" prefWidth="81.0" styleClass="subPane-Buttons2" stylesheets="@../sheets/space.css" text="Pay" />
+                <Button fx:id="btnViewBill" layoutX="567.0" layoutY="356.0" mnemonicParsing="false" onAction="#btnViewBillOnAction" prefHeight="26.0" prefWidth="83.0" styleClass="subPane-Buttons1" stylesheets="@../sheets/space.css" text="view Bill" textFill="WHITE" />
+                <Label layoutX="33.0" layoutY="388.0" prefHeight="23.0" prefWidth="111.0" text="Total Rs :">
+                    <font>
+                        <Font name="Arial Bold Italic" size="20.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="txtTotal" layoutX="131.0" layoutY="380.0" prefHeight="45.0" prefWidth="144.0" styleClass="custom-text-field" stylesheets="@../sheets/space.css">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </TextField>
+            <TableView fx:id="tblTreatementDetals" layoutX="85.0" layoutY="162.0" prefHeight="160.0" prefWidth="600.0">
+              <columns>
+                <TableColumn fx:id="colAppointmentId" prefWidth="152.33331298828125" text="Appointment Id" />
+                  <TableColumn fx:id="colTreatmentId" prefWidth="152.33331298828125" text="Treatment Id" />
+                  <TableColumn fx:id="colTreatmentType" prefWidth="152.33331298828125" text="Treatment Type" />
+                  <TableColumn fx:id="colCost" prefWidth="152.33331298828125" text="Cost" />
+                  <TableColumn fx:id="colAppointmentId4" prefWidth="152.33331298828125" text="Appointment Id" />
+                  <TableColumn fx:id="colAppointmentId5" prefWidth="152.33331298828125" text="Appointment Id" />
+                  <TableColumn fx:id="colAppointmentId6" prefWidth="152.33331298828125" text="Appointment Id" />
+                  <TableColumn fx:id="colAppointmentId7" prefWidth="152.33331298828125" text="Appointment Id" />
+              </columns>
+            </TableView>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
