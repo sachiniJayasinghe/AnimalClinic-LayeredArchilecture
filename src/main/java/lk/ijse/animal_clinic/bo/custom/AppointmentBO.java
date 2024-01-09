@@ -27,3 +27,4 @@ public interface AppointmentBO extends SuperBO {
      customerDto loadAll(String appId) throws SQLException, ClassNotFoundException;
 
     }
+//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
