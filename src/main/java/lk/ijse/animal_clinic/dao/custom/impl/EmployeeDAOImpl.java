@@ -17,8 +17,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
         while (rst.next()) {
             EmployeeDto entity = new EmployeeDto(
-                    rst.getString("id"),
-                    rst.getString("name"),
+                    rst.getString("emp_id"),
+                    rst.getString("emp_name"),
                     rst.getString("tel"),
                     rst.getString("e_mail"),
                     rst.getString("address"));
@@ -37,28 +37,28 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public boolean update(EmployeeDto dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.execute("UPDATE employee  SET  emp_name = ? , tel = ? , e_mail=? , address = ?  WHERE emp_id =?",
-                dto.getEmp_id(), dto.getName(), dto.getTel(), dto.getEmail(), dto.getAddress());
+                dto.getName(), dto.getTel(), dto.getEmail(), dto.getAddress(), dto.getEmp_id());
     }
 
         @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
-            ResultSet rst = SQLUtil.execute("SELECT id FROM employee WHERE id=?", id);
+            ResultSet rst = SQLUtil.execute("SELECT emp_id FROM employee WHERE emp_id=?", id);
             return rst.next();
     }
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("DELETE FROM employee WHERE id=?", id);
+        return SQLUtil.execute("DELETE FROM employee WHERE emp_id=?", id);
 
     }
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM employee ORDER BY id DESC LIMIT 1;");
+        ResultSet rst = SQLUtil.execute("SELECT emp_id FROM employee ORDER BY emp_id DESC LIMIT 1;");
         if (rst.next()) {
-            String id = rst.getString("id");
-            int newEmployeeId = Integer.parseInt(id.replace("E0-", "")) + 1;
-            return String.format("E0-%03d", newEmployeeId);
+            String id = rst.getString("emp_id");
+            int newEmployeeId = Integer.parseInt(id.replace("E00", "")) + 1;
+            return String.format("E%03d", newEmployeeId);
         } else {
             return "E001";
         }
@@ -67,9 +67,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public EmployeeDto search(String id) throws SQLException, ClassNotFoundException {
 
-        ResultSet rst = SQLUtil.execute("SELECT * FROM employee WHERE emp_id = ?");
+        ResultSet rst = SQLUtil.execute("SELECT * FROM employee WHERE emp_id = ?",id);
         rst.next();
-        return new EmployeeDto(id + "", rst.getString("name"), rst.getString("tel"), rst.getString("e_mail"), rst.getString("address"));
+        return new EmployeeDto(id + "", rst.getString("emp_name"), rst.getString("tel"), rst.getString("e_mail"), rst.getString("address"));
     }
 
 }

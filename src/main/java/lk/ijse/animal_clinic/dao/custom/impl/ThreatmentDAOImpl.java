@@ -11,13 +11,13 @@ import java.sql.Date;
 import java.util.List;
 
 public class ThreatmentDAOImpl implements ThreatmentDAO {
-
+@Override
     public boolean save(final TreatementDto dto) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO treatement VALUES(?, ?, ?, ?,?)";
         return SQLUtil.execute(sql, dto.getTreatement_id(), dto.getVaccination_id(), dto.getType(),
                 dto.getCost(), dto.getDate());
     }
-
+@Override
     public boolean update(final TreatementDto dto) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE treatement SET  vaccination_id = ? , type= ? ,cost=?,date=? WHERE treatement_id =?";
         return SQLUtil.execute(sql, dto.getVaccination_id(), dto.getType(), dto.getCost(),
@@ -26,9 +26,10 @@ public class ThreatmentDAOImpl implements ThreatmentDAO {
 
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        return false;
+        ResultSet rst = SQLUtil.execute("SELECT id FROM treatement  WHERE id=?", id);
+        return rst.next();
     }
-
+    @Override
     public boolean delete(String treatementId) throws SQLException, ClassNotFoundException {
         String sql = "DELETE FROM treatement WHERE treatement_id = ?";
         return SQLUtil.execute(sql, treatementId);
@@ -36,12 +37,20 @@ public class ThreatmentDAOImpl implements ThreatmentDAO {
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        return null;
-    }
+        ResultSet rst = SQLUtil.execute("SELECT treatement_id FROM treatement ORDER BY treatement_id DESC LIMIT 1");
+        if (rst.next()) {
+            String id = rst.getString("treatement_id");
+            int newCustomerId = Integer.parseInt(id.replace("T00", "")) + 1;
+            return String.format("T%03d", newCustomerId);
+        } else {
+            return "T001";
+        }
 
-    public TreatementDto search(String treatementId) throws SQLException, ClassNotFoundException {
+    }
+    @Override
+    public TreatementDto search(String id) throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM treatement WHERE treatement_id = ?";
-        ResultSet resultSet = SQLUtil.execute(sql, treatementId);
+        ResultSet resultSet = SQLUtil.execute(sql, id);
         return extractTreatementDto(resultSet);
     }
 
@@ -61,7 +70,7 @@ public class ThreatmentDAOImpl implements ThreatmentDAO {
         }
         return allThreatment;
     }
-
+    @Override
     public double getCost(String value) throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM treatement WHERE type = ?";
         ResultSet resultSet = SQLUtil.execute(sql, value);
@@ -73,7 +82,7 @@ public class ThreatmentDAOImpl implements ThreatmentDAO {
             return 0.0;
         }
     }
-
+@Override
     public String getThreatmentId(String value) throws SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM treatement WHERE type = ?";
         ResultSet resultSet = SQLUtil.execute(sql, value);
@@ -86,27 +95,8 @@ public class ThreatmentDAOImpl implements ThreatmentDAO {
         }
     }
 
-    public boolean generateNewId() throws SQLException, ClassNotFoundException {
-        String sql = "SELECT treatement_id FROM treatement ORDER BY treatement_id DESC LIMIT 1";
-        ResultSet resultSet = SQLUtil.execute(sql);
-        String lastId = null;
-
-        if (resultSet.next()) {
-            lastId = resultSet.getString("treatement_id");
-        }
-
-        if (lastId != null) {
-            int newId = Integer.parseInt(lastId) + 1;
-            return SQLUtil.execute("INSERT INTO treatement (treatement_id) VALUES (?)", Integer.toString(newId));
-        } else {
-            // Handle the case when there are no existing treatement records
-            // You can start with the treatement_id of your choice
-            // return SQLUtil.execute("INSERT INTO treatement (treatement_id) VALUES (?)", "1");
-            return false;
-        }
-    }
-
-    private TreatementDto extractTreatementDto(ResultSet resultSet) throws SQLException {
+  @Override
+    public TreatementDto extractTreatementDto(ResultSet resultSet) throws SQLException {
         if (resultSet.next()) {
             String treatement_id = resultSet.getString("treatement_id");
             String vaccination_id = resultSet.getString("vaccination_id");
@@ -118,8 +108,8 @@ public class ThreatmentDAOImpl implements ThreatmentDAO {
         }
         return null;
     }
-
-    private List<TreatementDto> extractTreatementDtoList(ResultSet resultSet) throws SQLException {
+@Override
+    public List<TreatementDto> extractTreatementDtoList(ResultSet resultSet) throws SQLException {
         List<TreatementDto> dtoList = new ArrayList<>();
 
         while (resultSet.next()) {

@@ -1,12 +1,13 @@
 package lk.ijse.animal_clinic.bo.custom;
 
+import lk.ijse.animal_clinic.bo.SuperBO;
 import lk.ijse.animal_clinic.dto.DoctorDto;
 import lk.ijse.animal_clinic.dto.customerDto;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface DoctorBO {
+public interface DoctorBO extends SuperBO {
     ArrayList<DoctorDto> getAll() throws SQLException, ClassNotFoundException ;
 
     boolean save(final DoctorDto dto) throws SQLException, ClassNotFoundException ;

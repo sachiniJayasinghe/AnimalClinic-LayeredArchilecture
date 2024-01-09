@@ -42,7 +42,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
         while (rst.next()) {
             customerDto entity = new customerDto(
-                    rst.getString("id"),
+                    rst.getString("cus_id"),
                     rst.getString("name"),
                     rst.getString("tel"),
                     rst.getString("e_mail"),
@@ -54,25 +54,29 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("DELETE FROM customer WHERE id=?", id);
+        return SQLUtil.execute("DELETE FROM customer WHERE cus_id=?", id);
     }
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM customer ORDER BY id DESC LIMIT 1;");
+        ResultSet rst = SQLUtil.execute("SELECT cus_id FROM customer ORDER BY cus_id DESC LIMIT 1");
         if (rst.next()) {
-            String id = rst.getString("id");
-            int newCustomerId = Integer.parseInt(id.replace("C0-", "")) + 1;
-            return String.format("C0-%03d", newCustomerId);
+            String id = rst.getString("cus_id");
+            int newCustomerId = Integer.parseInt(id.replace("C00", "")) + 1;
+            return String.format("C%03d", newCustomerId);
         } else {
             return "C001";
         }
     }
 
 
+
+
+
+
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM customer WHERE id=?", id);
+        ResultSet rst = SQLUtil.execute("SELECT cus_id FROM customer WHERE cus_id=?", id);
         return rst.next();
 
     }

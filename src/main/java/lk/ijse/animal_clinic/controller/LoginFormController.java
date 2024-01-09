@@ -12,6 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.LoginFormBOImpl;
+import lk.ijse.animal_clinic.bo.custom.LoginFormBO;
 import lk.ijse.animal_clinic.dto.UserDto;
 import lk.ijse.animal_clinic.model.UserModel;
 
@@ -60,6 +63,8 @@ public class LoginFormController implements Initializable {
 
     public static String userID;
 
+    LoginFormBO loginFormBO = (LoginFormBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.LoginFormBO);
+
     String user;
     private void vibrateTextField(TextField textField) {
         Timeline timeline = new Timeline(
@@ -89,8 +94,7 @@ public class LoginFormController implements Initializable {
     void btnLoginOnAction(ActionEvent event) throws IOException {
 
         try {
-            var model = new UserModel();
-            UserDto user1 = model.search(txtUserName.getText());
+            UserDto user1 = loginFormBO.search(txtUserName.getText());
             if (user1 != null) {
                 password = user1.getPassword();
                 user = user1.getName();
@@ -100,7 +104,7 @@ public class LoginFormController implements Initializable {
                 name = user1.getName();
                 System.out.println(password);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Something went wrong, please contact software company").show();
         }

@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class vaccinationsDAOImpl implements VaccinationsDAO {
+public class VaccinationsDAOImpl implements VaccinationsDAO {
     @Override
     public ArrayList<vaccinationsDto> getAll() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM vaccinations");
@@ -17,8 +17,8 @@ public class vaccinationsDAOImpl implements VaccinationsDAO {
         while (rst.next()) {
             vaccinationsDto entity = new vaccinationsDto(
                     rst.getString("vaccination_id"),
-                    rst.getString("name"),
-                    rst.getDate(" next_dueDate"));
+                    rst.getString("vaccine_name"),
+                    rst.getDate("next_dueDate"));
 
             allPet.add(entity);
         }
@@ -39,7 +39,7 @@ public class vaccinationsDAOImpl implements VaccinationsDAO {
 
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM vaccinations WHERE id=?", id);
+        ResultSet rst = SQLUtil.execute("SELECT vaccination_id FROM vaccinations WHERE vaccination_id=?", id);
         return rst.next();
     }
 
@@ -51,11 +51,11 @@ public class vaccinationsDAOImpl implements VaccinationsDAO {
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM vaccinations ORDER BY id DESC LIMIT 1;");
+        ResultSet rst = SQLUtil.execute("SELECT vaccination_id FROM vaccinations ORDER BY vaccination_id DESC LIMIT 1;");
         if (rst.next()) {
-            String id = rst.getString("id");
-            int newEmployeeId = Integer.parseInt(id.replace("V0-", "")) + 1;
-            return String.format("V0-%03d", newEmployeeId);
+            String id = rst.getString("vaccination_id");
+            int newEmployeeId = Integer.parseInt(id.replace("V00", "")) + 1;
+            return String.format("V%03d", newEmployeeId);
         } else {
             return "V001";
         }
@@ -64,8 +64,8 @@ public class vaccinationsDAOImpl implements VaccinationsDAO {
     @Override
     public vaccinationsDto search(String id) throws SQLException, ClassNotFoundException {
 
-        ResultSet rst = SQLUtil.execute("SELECT * FROM vaccinations WHERE pet_id = ?", id);
+        ResultSet rst = SQLUtil.execute("SELECT * FROM vaccinations WHERE vaccination_id = ?", id);
         rst.next();
-        return new vaccinationsDto(id + "", rst.getString("name"), rst.getDate("getNext_dueDat"));
+        return new vaccinationsDto(id + "", rst.getString("vaccine_name"), rst.getDate("Next_dueDate"));
     }
 }

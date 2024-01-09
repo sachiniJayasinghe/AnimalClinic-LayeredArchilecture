@@ -159,7 +159,6 @@ public class SignUpFormController implements Initializable {
 
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
-            UserModel userModel = new UserModel();
             image = convertImageToByteArray(selectedFile);
             Image image = new Image(selectedFile.toURI().toString());
             img.setImage(image);

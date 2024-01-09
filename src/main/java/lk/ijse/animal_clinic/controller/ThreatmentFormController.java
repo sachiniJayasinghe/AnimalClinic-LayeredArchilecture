@@ -13,8 +13,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.ThreatmentBOImpl;
+import lk.ijse.animal_clinic.bo.custom.ThreatmentBO;
 import lk.ijse.animal_clinic.dto.AppointmentDto;
 import lk.ijse.animal_clinic.dto.TreatementDto;
+import lk.ijse.animal_clinic.dto.customerDto;
 import lk.ijse.animal_clinic.dto.tm.TreatementTm;
 import lk.ijse.animal_clinic.dto.tm.vaccinationsTm;
 import lk.ijse.animal_clinic.dto.vaccinationsDto;
@@ -79,6 +83,8 @@ public class ThreatmentFormController {
 
     @FXML
     private TextField txtVaccinationId;
+
+    ThreatmentBO threatmentBO = (ThreatmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ThreatmentBO);
     public void initialize() {
         setCellValueFactory();
         loadAllTreatement();
@@ -98,12 +104,11 @@ public class ThreatmentFormController {
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
     }
     private void loadAllTreatement() {
-        var model = new TreatementModel();
 
         ObservableList<TreatementTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<TreatementDto> dtoList = model.getAllTreatement();
+            List<TreatementDto> dtoList = threatmentBO.getAll();
 
             for(TreatementDto dto : dtoList) {
                 obList.add(
@@ -120,7 +125,7 @@ public class ThreatmentFormController {
             }
 
             tblTreatement.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -147,13 +152,9 @@ public class ThreatmentFormController {
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
         String treatement_id = txtTreatementId.getText();
-        var TreatementModel = new TreatementModel();
-
-
-
 
         try {
-            boolean isDeleted = TreatementModel.TreatementModel(treatement_id);
+            boolean isDeleted = threatmentBO.delete(treatement_id);
 
             if(isDeleted) {
                 tblTreatement.refresh();
@@ -164,7 +165,7 @@ public class ThreatmentFormController {
                 generateNextThreatmentID();
 
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
@@ -209,10 +210,8 @@ public class ThreatmentFormController {
 
             var dto = new TreatementDto(treatement_id, vaccination_id, type, cost, Date);
 
-            var model = new TreatementModel();
-
             try {
-                boolean isSaved = model.saveTreatement(dto);
+                boolean isSaved = threatmentBO.save(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, " saved!").show();
                     clearFields();
@@ -221,7 +220,7 @@ public class ThreatmentFormController {
                     generateNextThreatmentID();
 
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
             }
@@ -283,9 +282,8 @@ public class ThreatmentFormController {
 
         var dto = new TreatementDto(treatement_id,vaccination_id,type,cost,Date);
 
-        var model = new TreatementModel();
         try {
-            boolean isUpdated = model.updateTreatement(dto);
+            boolean isUpdated = threatmentBO.update(dto);
             System.out.println(isUpdated);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "  updated!").show();
@@ -296,7 +294,7 @@ public class ThreatmentFormController {
             }
 
         }
-        catch(SQLException e){
+        catch(SQLException | ClassNotFoundException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
         }
@@ -308,21 +306,20 @@ public class ThreatmentFormController {
 
     @FXML
     void txtSearchOnAction(ActionEvent event) {
-        String treatement_id = txtTreatementId.getText();
-        var TreatementModel = new TreatementModel();
-
+        String id = txtTreatementId.getText();
 
         try {
-            TreatementDto dto =TreatementModel .searchTreatment(treatement_id);
+            TreatementDto dto = threatmentBO.search(id);
 
             if(dto != null) {
                 fillFields(dto);
             } else {
-                new Alert(Alert.AlertType.INFORMATION, " not found!").show();
+                new Alert(Alert.AlertType.INFORMATION, "customer not found!").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
 
@@ -344,10 +341,9 @@ public class ThreatmentFormController {
 
     private void generateNextThreatmentID() {
         try {
-            TreatementModel treatementModel = new TreatementModel();
-            String orderId = treatementModel.generateNextThreatmentId();
+            String orderId = threatmentBO.generateNewID();
             txtTreatementId.setText(orderId);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

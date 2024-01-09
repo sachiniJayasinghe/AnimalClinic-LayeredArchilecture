@@ -12,6 +12,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.EmployeeBOImpl;
+import lk.ijse.animal_clinic.bo.custom.EmployeeBO;
 import lk.ijse.animal_clinic.dto.EmployeeDto;
 import lk.ijse.animal_clinic.dto.customerDto;
 import lk.ijse.animal_clinic.dto.tm.CustomerTm;
@@ -70,6 +73,7 @@ public class EmployeeFormController {
     @FXML
     private TextField txtTel;
 
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EmployeeBO);
 
     public void initialize() {
         setCellValueFactory();
@@ -88,12 +92,11 @@ public class EmployeeFormController {
     }
 
     private void loadAllEmployee() {
-        var model = new EmployeeModel();
 
         ObservableList<EmployeeTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<EmployeeDto> dtoList = model.getAllEmployee();
+            List<EmployeeDto> dtoList = employeeBO.getAll();
 
             for(EmployeeDto dto : dtoList) {
                 obList.add(
@@ -110,6 +113,8 @@ public class EmployeeFormController {
 
             tblEmployee.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -128,7 +133,7 @@ public class EmployeeFormController {
 
         var model = new EmployeeModel();
         try {
-            boolean isDeleted = model.deleteEmployee(emp_id);
+            boolean isDeleted = employeeBO.delete(emp_id);
             tblEmployee.refresh();
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "delectd").show();
@@ -139,6 +144,8 @@ public class EmployeeFormController {
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
 
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -179,10 +186,9 @@ public class EmployeeFormController {
 
             var dto = new EmployeeDto(emp_id, name, tel, email, address);
 
-            var model = new EmployeeModel();
 
             try {
-                boolean isSaved = model.saveEmployee(dto);
+                boolean isSaved = employeeBO.save(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "employee saved!").show();
                     clearFields();
@@ -192,6 +198,8 @@ public class EmployeeFormController {
                 }
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
 
 
@@ -256,10 +264,9 @@ public class EmployeeFormController {
 
         var dto = new EmployeeDto(emp_id , name, tel , email,address);
 
-        var model = new EmployeeModel();
 
         try {
-            boolean isUpdated = model.updateEmployee(dto);
+            boolean isUpdated = employeeBO.update(dto);
             System.out.println(isUpdated);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, " employee updated!").show();
@@ -272,6 +279,8 @@ public class EmployeeFormController {
         catch(SQLException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
 
@@ -281,9 +290,8 @@ public class EmployeeFormController {
     void txtSearchOnAction(ActionEvent event) {
         String emp_id = txtEmployeeId.getText();
 
-        var model = new EmployeeModel();
         try {
-            EmployeeDto dto = model.searchEmployee(emp_id);
+            EmployeeDto dto = employeeBO.search(emp_id);
 
             if(dto != null) {
                 fillFields(dto);
@@ -292,6 +300,8 @@ public class EmployeeFormController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -316,10 +326,11 @@ public class EmployeeFormController {
 
     private void generateNextEmployeeID() {
         try {
-            EmployeeModel employeeModel = new EmployeeModel();
-            String orderId = employeeModel.generateNextEmployeeId();
+            String orderId = employeeBO.generateNewID();
             txtEmployeeId.setText(orderId);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

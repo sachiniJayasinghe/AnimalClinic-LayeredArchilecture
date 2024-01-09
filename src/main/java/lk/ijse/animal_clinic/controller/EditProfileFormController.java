@@ -10,6 +10,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.ConfirmPasswordBOImpl;
+import lk.ijse.animal_clinic.bo.EditProfileBOImpl;
+import lk.ijse.animal_clinic.bo.custom.ConfirmPasswordBO;
+import lk.ijse.animal_clinic.bo.custom.EditProfileBO;
 import lk.ijse.animal_clinic.dto.UserDto;
 import lk.ijse.animal_clinic.model.UserModel;
 
@@ -47,6 +52,9 @@ public class EditProfileFormController implements Initializable {
 
     byte[] imageData;
 
+   EditProfileBO editProfileBO =  (EditProfileBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EditProfileBO);
+
+
 
     @FXML
     void btnChoosseImgOnAction(ActionEvent event) {
@@ -62,11 +70,10 @@ public class EditProfileFormController implements Initializable {
         byte[] image = imageData;
 
         UserDto userDto = new UserDto(LoginFormController.userID, LoginFormController.password, name, address, email, image);
-        UserModel userModel = new UserModel();
 
 
         try {
-            boolean isUpdated = userModel.updateUser(userDto);
+            boolean isUpdated = editProfileBO.updateUser(userDto);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated Successfully").show();
             } else {
@@ -74,10 +81,12 @@ public class EditProfileFormController implements Initializable {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private void chooseImage() {
+    public void chooseImage() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Image");
         fileChooser.getExtensionFilters().addAll(
@@ -87,7 +96,6 @@ public class EditProfileFormController implements Initializable {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             System.out.println("Selected Image: " + selectedFile.getAbsolutePath());
-            UserModel userModel = new UserModel();
             imageData = convertImageToByteArray(selectedFile);
             Image image = new Image(selectedFile.toURI().toString());
             img.setImage(image);
@@ -119,9 +127,8 @@ public class EditProfileFormController implements Initializable {
 
     private void loardImg() {
         try {
-            UserModel userModel = new UserModel();
             System.out.println(LoginFormController.userID);
-            byte[] image = userModel.loadImg(LoginFormController.userID);
+            byte[] image = editProfileBO.loadImg(LoginFormController.userID);
 
             System.out.println(image);
 
@@ -135,6 +142,8 @@ public class EditProfileFormController implements Initializable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

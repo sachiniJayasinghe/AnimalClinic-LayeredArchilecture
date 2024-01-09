@@ -1,6 +1,7 @@
 package lk.ijse.animal_clinic.bo;
 
 import lk.ijse.animal_clinic.bo.custom.StockBO;
+import lk.ijse.animal_clinic.dao.DAOFactory;
 import lk.ijse.animal_clinic.dao.custom.StockDAO;
 import lk.ijse.animal_clinic.dao.custom.impl.StockDAOImpl;
 import lk.ijse.animal_clinic.dto.StockDto;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class StockBOImpl implements StockBO {
-    StockDAO stockDAO = new StockDAOImpl();
+    StockDAO stockDAO =  (StockDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Stock);
     @Override
     public ArrayList<StockDto> getAll() throws SQLException, ClassNotFoundException {
         return stockDAO.getAll();
@@ -34,6 +35,7 @@ public class StockBOImpl implements StockBO {
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
         return stockDAO.delete(id);
     }
+
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {

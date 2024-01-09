@@ -1,6 +1,7 @@
 package lk.ijse.animal_clinic.bo;
 
 import lk.ijse.animal_clinic.bo.custom.EmployeeBO;
+import lk.ijse.animal_clinic.dao.DAOFactory;
 import lk.ijse.animal_clinic.dao.custom.EmployeeDAO;
 import lk.ijse.animal_clinic.dao.custom.impl.EmployeeDAOImpl;
 import lk.ijse.animal_clinic.dto.EmployeeDto;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EmployeeBOImpl implements EmployeeBO {
-    EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    EmployeeDAO employeeDAO = (EmployeeDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Employee);
     @Override
     public ArrayList<EmployeeDto> getAll() throws SQLException, ClassNotFoundException {
         return employeeDAO.getAll();

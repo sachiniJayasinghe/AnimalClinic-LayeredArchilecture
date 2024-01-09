@@ -17,13 +17,13 @@ public class DoctorDAOImpl implements DoctorDAO {
 
         while (rst.next()) {
             DoctorDto entity = new DoctorDto(
-                    rst.getString("id"),
-                    rst.getString("name"),
+                    rst.getString("doctor_id"),
+                    rst.getString("doctor_name"),
                     rst.getString("tel"),
-                    rst.getString("e_mail"),
                     rst.getString("address"),
-                    rst.getTime("comeInTime"),
-                    rst.getTime("outTime")
+                    rst.getString("e_mail"),
+                    rst.getTime("come_in_time"),
+                    rst.getTime("com_out_time")
             );
             allDoctor.add(entity);
         }
@@ -33,38 +33,37 @@ public class DoctorDAOImpl implements DoctorDAO {
     @Override
     public boolean save(DoctorDto dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.
-                execute("INSERT INTO doctor VALUES(?, ?, ?, ?,?)",
-                        dto.getId(), dto.getName(), dto.getTel(), dto.getEmail(), dto.getAddress(),dto.getComeInTime(),dto.getOutTime());
+                execute("INSERT INTO doctor VALUES(?,?,?,?,?,?,?)",
+                        dto.getId(), dto.getName(), dto.getTel(),  dto.getAddress(), dto.getEmail(),dto.getComeInTime(),dto.getOutTime());
     }
 
 
 
     @Override
     public boolean update(DoctorDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("UPDATE doctor  SET  doctor_name = ? , tel = ? , e_mail=? , address = ? come_in_time=? com_out_time ?   WHERE doctor_id =?",
-                dto.getId(), dto.getName(), dto.getTel(), dto.getEmail(), dto.getAddress(),dto.getComeInTime(),dto.getOutTime());
-
+        return SQLUtil.execute("UPDATE doctor SET doctor_name = ?, tel = ?, address = ?, e_mail = ?, come_in_time = ?, com_out_time = ? WHERE doctor_id = ?",
+                dto.getName(), dto.getTel(),  dto.getAddress(),  dto.getEmail(),dto.getComeInTime(), dto.getOutTime(), dto.getId());
     }
 
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM doctor WHERE id=?", id);
+        ResultSet rst = SQLUtil.execute("SELECT doctor_id FROM doctor WHERE doctor_id=?", id);
         return rst.next();
     }
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("DELETE FROM doctor WHERE id=?", id);
+        return SQLUtil.execute("DELETE FROM doctor WHERE doctor_id=?", id);
 
     }
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM doctor ORDER BY id DESC LIMIT 1;");
+        ResultSet rst = SQLUtil.execute("SELECT doctor_id FROM doctor ORDER BY doctor_id DESC LIMIT 1");
         if (rst.next()) {
-            String id = rst.getString("id");
-            int newCustomerId = Integer.parseInt(id.replace("D0-", "")) + 1;
-            return String.format("D0-%03d", newCustomerId);
+            String id = rst.getString("doctor_id");
+            int newCustomerId = Integer.parseInt(id.replace("D00", "")) + 1;
+            return String.format("D%03d", newCustomerId);
         } else {
             return "D001";
         }
@@ -72,9 +71,9 @@ public class DoctorDAOImpl implements DoctorDAO {
     @Override
     public DoctorDto search(String id) throws SQLException, ClassNotFoundException {
 
-        ResultSet rst = SQLUtil.execute("SELECT * FROM doctor WHERE cus_id = ?", id);
+        ResultSet rst = SQLUtil.execute("SELECT * FROM doctor WHERE doctor_id= ?", id);
         rst.next();
-        return new DoctorDto(id + "", rst.getString("name"), rst.getString("tel"), rst.getString("e_mail"), rst.getString("address"),rst.getTime("comeInTime"),rst.getTime("outTime"));
+        return new DoctorDto(id + "", rst.getString("doctor_name"), rst.getString("tel"), rst.getString("address"),rst.getString("e_mail") ,rst.getTime("come_in_time"),rst.getTime("com_out_time"));
     }
 
     @Override
@@ -92,7 +91,7 @@ public class DoctorDAOImpl implements DoctorDAO {
     }
     @Override
     public DoctorDto loadTime(String doctorID) throws SQLException, ClassNotFoundException {
-        String sql =" select * from doctor where doctor_id=?";
+        String sql ="select * from doctor where doctor_id=?";
 
         ResultSet resultSet = SQLUtil.execute(sql,doctorID);
 
@@ -101,12 +100,12 @@ public class DoctorDAOImpl implements DoctorDAO {
             String id = resultSet.getString(1);
             String name = resultSet.getString(2);
             String tel = resultSet.getString(3);
-            String e_mail = resultSet.getString(4);
-            String address = resultSet.getString(5);
+            String address = resultSet.getString(4);
+            String e_mail = resultSet.getString(5);
             Time comeInTime = resultSet.getTime(6);
             Time outTime = resultSet.getTime(7);
 
-            dto = new DoctorDto(id, name, tel,e_mail,address,comeInTime,outTime);
+            dto = new DoctorDto(id, name, tel,address,e_mail,comeInTime,outTime);
         }
         return  dto;
     }

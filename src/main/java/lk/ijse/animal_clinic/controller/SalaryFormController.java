@@ -10,6 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.SalaryBOImpl;
+import lk.ijse.animal_clinic.bo.custom.SalaryBO;
 import lk.ijse.animal_clinic.dto.AppointmentDto;
 import lk.ijse.animal_clinic.dto.EmployeeDto;
 import lk.ijse.animal_clinic.dto.SalaryDto;
@@ -75,6 +78,8 @@ public class SalaryFormController {
 
     @FXML
     private JFXComboBox<String> cmbEmpId;
+
+    SalaryBO salaryBO = (SalaryBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.SalaryBO);
     public void initialize() {
         setCellValueFactory();
         loadAllSalary();
@@ -92,12 +97,11 @@ public class SalaryFormController {
 
     }
     private void loadAllSalary() {
-        var model = new SalaryModel();
 
         ObservableList<SalaryTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<SalaryDto> dtoList = model.getAllSalary();
+            List<SalaryDto> dtoList = salaryBO.getAll();
 
             for(SalaryDto dto : dtoList) {
                 obList.add(
@@ -113,7 +117,7 @@ public class SalaryFormController {
             }
 
             tblSalary.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -121,13 +125,13 @@ public class SalaryFormController {
     private void loadEmpIds() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<EmployeeDto> cusList = EmployeeModel.getAllEmployee();
+            List<EmployeeDto> cusList = salaryBO.getAllEmployee();
 
             for (EmployeeDto dto : cusList) {
                 obList.add(dto.getEmp_id());
             }
             cmbEmpId.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -145,9 +149,8 @@ public class SalaryFormController {
         String salary_id = txtSalaryId.getText();
 
 
-        var SalaryModel  = new SalaryModel();
         try {
-            boolean isDeleted = SalaryModel.deleteSalary(salary_id);
+            boolean isDeleted = salaryBO.delete(salary_id);
 
             if(isDeleted) {
                 tblSalary.refresh();
@@ -156,7 +159,7 @@ public class SalaryFormController {
                 setCellValueFactory();
                 loadAllSalary();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
@@ -198,10 +201,9 @@ public class SalaryFormController {
             double amount = Double.parseDouble(txtSalaryAmount.getText());
             var dto = new SalaryDto(salary_id, emp_id, date, salary_month, amount);
 
-            var model = new SalaryModel();
 
             try {
-                boolean isSaved = model.saveSalary(dto);
+                boolean isSaved = salaryBO.save(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, " saved!").show();
                     clearFields();
@@ -209,7 +211,7 @@ public class SalaryFormController {
                     loadAllSalary();
 
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
             }
@@ -260,11 +262,9 @@ public class SalaryFormController {
 
         var dto = new SalaryDto(salary_id, emp_id,  date, salary_month,amount);
 
-        var model = new SalaryModel();
-
 
         try {
-            boolean isUpdated = model.updateSalary(dto);
+            boolean isUpdated = salaryBO.update(dto);
             System.out.println(isUpdated);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, " Appointment updated!").show();
@@ -275,7 +275,7 @@ public class SalaryFormController {
 
         }
         catch(
-SQLException e){
+                SQLException | ClassNotFoundException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
         }
@@ -292,16 +292,15 @@ SQLException e){
 
         String salary_id = txtSalaryId.getText();
 
-        var model = new SalaryModel();
         try {
-            SalaryDto dto = model.searchSalary(salary_id);
+            SalaryDto dto = salaryBO.search(salary_id);
 
             if(dto != null) {
                 fillFields(dto);
             } else {
                 new Alert(Alert.AlertType.INFORMATION, "SALARY not found!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
@@ -321,6 +320,17 @@ SQLException e){
         txtMonths.setText("");
         txtSalaryAmount.setText("");
         txtDate.setPromptText(" ");
+    }
+
+    public void generateNextSalaryId() {
+        try {
+            String salaryID = salaryBO.generateNewID();
+            txtSalaryId.setText(salaryID);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
     private void setAnimation(TableView tbl){
         String css = getClass().getResource("/sheets/tableSheet.css").toExternalForm();

@@ -1,6 +1,7 @@
 package lk.ijse.animal_clinic.bo;
 
 import lk.ijse.animal_clinic.bo.custom.CustomerBO;
+import lk.ijse.animal_clinic.dao.DAOFactory;
 import lk.ijse.animal_clinic.dao.custom.CustomerDAO;
 import lk.ijse.animal_clinic.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.animal_clinic.dto.customerDto;
@@ -9,7 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerBOImpl implements CustomerBO {
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+   // CustomerDAO customerDAO = new CustomerDAOImpl();
+    CustomerDAO customerDAO= (CustomerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Customer);
+
     @Override
     public ArrayList<customerDto> getAll() throws SQLException, ClassNotFoundException {
         return customerDAO.getAll();
@@ -22,7 +25,7 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public boolean update(customerDto dto) throws SQLException, ClassNotFoundException {
-        return customerDAO.update(new customerDto(dto.getId(), dto.getName(), dto.getTel(), dto.getEmail(), dto.getAddress()));
+        return customerDAO.update(new customerDto( dto.getName(), dto.getTel(), dto.getEmail(), dto.getAddress(),dto.getId()));
     }
 
     @Override

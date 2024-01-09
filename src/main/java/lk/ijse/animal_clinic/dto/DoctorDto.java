@@ -13,8 +13,8 @@ public class DoctorDto {
     private String id;
     private String name;
     private String tel;
-    private String email;
     private String address;
+    private String email;
     private Time comeInTime;
     private Time outTime;
 

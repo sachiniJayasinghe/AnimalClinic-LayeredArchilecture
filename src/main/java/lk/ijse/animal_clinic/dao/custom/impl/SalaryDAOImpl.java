@@ -18,7 +18,7 @@ public class SalaryDAOImpl implements SalaryDAO {
 
         while (rst.next()) {
             SalaryDto entity = new SalaryDto(
-                    rst.getString("id"),
+                    rst.getString("salary_id"),
                     rst.getString("emp_id"),
                     rst.getDate("date"),
                     rst.getString("salary_month"),
@@ -41,31 +41,33 @@ public class SalaryDAOImpl implements SalaryDAO {
 
         return SQLUtil.
                 execute("UPDATE salary SET  emp_id = ?  , date=? , salary_month= ? , amount=? WHERE salary_id =?",
-                        dto.getSalary_id(), dto.getEmp_id(), dto.getDate(), dto.getSalary_month(), dto.getAmount());
+                        dto.getEmp_id(), dto.getDate(), dto.getSalary_month(), dto.getAmount(), dto.getSalary_id());
     }
 
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM salary WHERE id=?", id);
+        ResultSet rst = SQLUtil.execute("SELECT salary_id FROM salary WHERE salary_id=?", id);
         return rst.next();
     }
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("DELETE FROM salary WHERE id=?", id);
+        return SQLUtil.execute("DELETE FROM salary WHERE salary_id=?", id);
 
     }
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM salary ORDER BY id DESC LIMIT 1;");
+        ResultSet rst = SQLUtil.execute("SELECT salary_id FROM salary  ORDER BY salary_id DESC LIMIT 1");
         if (rst.next()) {
-            String id = rst.getString("id");
-            int newPetId = Integer.parseInt(id.replace("S0-", "")) + 1;
-            return String.format("S0-%03d", newPetId);
-        } else
+            String id = rst.getString("salary_id");
+            int newCustomerId = Integer.parseInt(id.replace("S00", "")) + 1;
+            return String.format("S%03d", newCustomerId);
+        } else {
             return "S001";
-    }
+        }
+
+}
 
     @Override
     public SalaryDto search(String id) throws SQLException, ClassNotFoundException {

@@ -16,10 +16,10 @@ public class PetDAOImpl implements PetDAO {
 
         while (rst.next()) {
             PetDto entity = new PetDto(
-                    rst.getString("id"),
+                    rst.getString("pet_id"),
                     rst.getString("name"),
-                    rst.getString("pet_type"),
                     rst.getString("age"),
+                    rst.getString("pet_type"),
                     rst.getString("cus_id"));
             allPet.add(entity);
         }
@@ -30,36 +30,36 @@ public class PetDAOImpl implements PetDAO {
     public boolean save(PetDto dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.
                 execute("INSERT INTO pet VALUES(?, ?, ?, ?,?)",
-                        dto.getPet_id(), dto.getName(), dto.getPet_type(), dto.getAge(), dto.getCus_id());
+                        dto.getPet_id(), dto.getName(), dto.getAge(),dto.getPet_type(), dto.getCus_id());
     }
 
     @Override
     public boolean update(PetDto dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.execute("Update pet SET name =?, pet_type=?, age=?,cus_id =? WHERE pet_id =?",
-                dto.getPet_id(), dto.getName(), dto.getPet_type(), dto.getAge(), dto.getCus_id());
+                dto.getName(), dto.getPet_type(), dto.getAge(), dto.getCus_id(),dto.getPet_id());
 
 
     }
 
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM pet WHERE id=?", id);
+        ResultSet rst = SQLUtil.execute("SELECT pet_id FROM pet WHERE pet_id=?", id);
         return rst.next();
     }
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("DELETE FROM pet WHERE id=?", id);
+        return SQLUtil.execute("DELETE FROM pet WHERE pet_id=?", id);
 
     }
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM pet ORDER BY id DESC LIMIT 1;");
+        ResultSet rst = SQLUtil.execute("SELECT pet_id FROM pet ORDER BY pet_id DESC LIMIT 1;");
         if (rst.next()) {
-            String id = rst.getString("id");
-            int newPetId = Integer.parseInt(id.replace("P0-", "")) + 1;
-            return String.format("P0-%03d", newPetId);
+            String id = rst.getString("pet_id");
+            int newPetId = Integer.parseInt(id.replace("P00", "")) + 1;
+            return String.format("P%03d", newPetId);
         } else 
             return "P001";
         }
@@ -70,7 +70,7 @@ public class PetDAOImpl implements PetDAO {
 
         ResultSet rst = SQLUtil.execute("SELECT * FROM pet WHERE pet_id = ?", id);
         rst.next();
-        return new PetDto(id + "", rst.getString("name"), rst.getString("pet_type"), rst.getString("age"), rst.getString("cus_id"));
+        return new PetDto(id + "", rst.getString("name"),  rst.getString("age"),rst.getString("pet_type"), rst.getString("cus_id"));
     }
     @Override
     public int getPetCount() throws SQLException, ClassNotFoundException {

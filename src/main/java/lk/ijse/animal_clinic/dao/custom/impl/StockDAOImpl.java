@@ -39,12 +39,12 @@ public class StockDAOImpl implements StockDAO {
     public boolean update(StockDto dto) throws SQLException, ClassNotFoundException {
         return SQLUtil.
                 execute("UPDATE stock SET  category = ? , date= ?  WHERE stock_id =?",
-                        dto.getStock_id(), dto.getCategory(), dto.getDate());
+                         dto.getCategory(), dto.getDate(),dto.getStock_id());
     }
 
     @Override
     public boolean exist(String  stockId) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM stock WHERE id=?", stockId);
+        ResultSet rst = SQLUtil.execute("SELECT stock_id FROM stock WHERE stock_id=?", stockId);
         return rst.next();
     }
 
@@ -58,9 +58,9 @@ public class StockDAOImpl implements StockDAO {
     public String generateNewID() throws SQLException, ClassNotFoundException {
         ResultSet rst = SQLUtil.execute("SELECT id FROM stock ORDER BY id DESC LIMIT 1;");
         if (rst.next()) {
-            String id = rst.getString("id");
-            int newPetId = Integer.parseInt(id.replace("ST0-", "")) + 1;
-            return String.format("ST0-%03d", newPetId);
+            String id = rst.getString("stock_id");
+            int newPetId = Integer.parseInt(id.replace("ST00-", "")) + 1;
+            return String.format("ST%03d", newPetId);
         } else
             return "ST001";
     }
@@ -70,7 +70,7 @@ public class StockDAOImpl implements StockDAO {
         String sql = "SELECT * FROM stock WHERE stock_id = ?";
         ResultSet rst = SQLUtil.execute("SELECT * FROM stock WHERE stock_id = ?", stockId);
         rst.next();
-        return new StockDto(stockId + "", rst.getString(" category "), rst.getDate("date"));
+        return new StockDto(stockId + "", rst.getString("category "), rst.getDate("date"));
 
 
     }

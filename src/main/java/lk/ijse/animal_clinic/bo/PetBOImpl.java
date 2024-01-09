@@ -1,19 +1,28 @@
 package lk.ijse.animal_clinic.bo;
 
 import lk.ijse.animal_clinic.bo.custom.PetBO;
+import lk.ijse.animal_clinic.dao.DAOFactory;
+import lk.ijse.animal_clinic.dao.custom.CustomerDAO;
 import lk.ijse.animal_clinic.dao.custom.PetDAO;
+import lk.ijse.animal_clinic.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.animal_clinic.dao.custom.impl.PetDAOImpl;
 import lk.ijse.animal_clinic.dto.PetDto;
+import lk.ijse.animal_clinic.dto.customerDto;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PetBOImpl implements PetBO {
-    PetDAO petDAO = new PetDAOImpl();
+    PetDAO petDAO = (PetDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Pet);
+
+    CustomerDAO customerDAO= (CustomerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Customer);
 
 
     @Override
     public ArrayList<PetDto> getAll() throws SQLException, ClassNotFoundException {
+
+
         return petDAO.getAll();
     }
 
@@ -39,7 +48,7 @@ public class PetBOImpl implements PetBO {
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        return generateNewID();
+        return petDAO.generateNewID();
     }
 
     @Override
@@ -49,6 +58,11 @@ public class PetBOImpl implements PetBO {
 
     @Override
     public int getPetCount() throws SQLException, ClassNotFoundException {
-        return getPetCount();
+        return petDAO.getPetCount();
+    }
+
+    @Override
+    public List<customerDto> getAllCustomers() throws SQLException, ClassNotFoundException {
+        return customerDAO.getAll();
     }
 }

@@ -19,12 +19,13 @@ public class SupliyerDAOImpl implements SupliyerDAO {
 
         while (rst.next()) {
             SupliyerDto entity = new SupliyerDto(
-                    rst.getString("id"),
-                    rst.getString("name"),
+                    rst.getString("supliyer_id"),
+                    rst.getString("stock_id"),
+                    rst.getString("supliyer_name"),
                     rst.getString("tel"),
-                    rst.getString("email"),
-                    rst.getString("address"),
-                    rst.getString("stock_id"));
+                    rst.getString("e_mail"),
+                    rst.getString("address"));
+
             allSupliyer.add(entity);
         }
         return allSupliyer;
@@ -39,27 +40,26 @@ public class SupliyerDAOImpl implements SupliyerDAO {
 
     @Override
     public boolean update(SupliyerDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("UPDATE supliyer  SET  stock_id = ? , supliyer_name = ? , tel=?,e_mail=? , address = ?  WHERE supliyer_id =?",dto.getSupliyer_id(), dto.getStock_id(), dto.getSupliyer_name(),
-                dto.getTel(), dto.getE_mail(), dto.getAddress());
+        return SQLUtil.execute("UPDATE supliyer  SET  stock_id = ? , supliyer_name = ? , tel=?,e_mail=? , address = ?  WHERE supliyer_id =?", dto.getStock_id(),dto.getSupliyer_name(),
+                dto.getTel(), dto.getE_mail(), dto.getAddress(),dto.getSupliyer_id());
     }
-
     @Override
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM supliyer WHERE id=?", id);
+        ResultSet rst = SQLUtil.execute("SELECT supliyer_id FROM supliyer WHERE supliyer_id=?", id);
         return rst.next();
     }
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        String sql = "DELETE FROM supliyer WHERE stock_id = ?";
+        String sql = "DELETE FROM supliyer WHERE supliyer_id = ?";
         return SQLUtil.execute(sql, id);
     }
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute("SELECT id FROM supliyer ORDER BY id DESC LIMIT 1;");
+        ResultSet rst = SQLUtil.execute("SELECT supliyer_id FROM supliyer ORDER BY supliyer_id DESC LIMIT 1;");
         if (rst.next()) {
-            String id = rst.getString("id");
+            String id = rst.getString("supliyer_id");
             int newPetId = Integer.parseInt(id.replace("SP0-", "")) + 1;
             return String.format("SP0-%03d", newPetId);
         } else
@@ -68,10 +68,8 @@ public class SupliyerDAOImpl implements SupliyerDAO {
 
     @Override
     public SupliyerDto search(String id) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM supliyer WHERE stock_id = ?";
-        ResultSet rst = SQLUtil.execute("SELECT * FROM stock WHERE stock_id = ?", id);
+        ResultSet rst = SQLUtil.execute("SELECT * FROM supliyer WHERE supliyer_id = ?", id);
         rst.next();
-        return new SupliyerDto(id + "", rst.getString("name"), rst.getString("tel"), rst.getString("e_mail"), rst.getString("address"),rst.getString("stock_id"));
-
+        return new SupliyerDto(id + "", rst.getString("stock_id"), rst.getString("supliyer_name"),rst.getString("tel"), rst.getString("e_mail"), rst.getString("address"));
     }
 }

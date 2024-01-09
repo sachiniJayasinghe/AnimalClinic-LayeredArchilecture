@@ -13,6 +13,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.AppointementBOImpl;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.custom.AppointmentBO;
 import lk.ijse.animal_clinic.db.DbConnection;
 import lk.ijse.animal_clinic.dto.AppointmentDto;
 import lk.ijse.animal_clinic.dto.DoctorDto;
@@ -38,6 +41,8 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.util.List;
 public class AppointmentFormController {
+
+
 
     @FXML
     private JFXButton btnReport;
@@ -103,6 +108,7 @@ public class AppointmentFormController {
 
     AppointmentDto appointmentDto;
 
+    AppointmentBO appointmentBO  =  (AppointmentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.AppointmentBO);
     public void initialize() {
         setCellValueFactory();
         loadAllAppointment();
@@ -120,12 +126,11 @@ public class AppointmentFormController {
         colNumber.setCellValueFactory(new PropertyValueFactory<>("Number"));
     }
     private void loadAllAppointment() {
-        var model = new AppointmentModel();
 
         ObservableList<AppointmentTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<AppointmentDto> dtoList = model.getAllAppointment();
+            List<AppointmentDto> dtoList = appointmentBO.getAll();
 
             for(AppointmentDto dto : dtoList) {
                 obList.add(
@@ -144,13 +149,15 @@ public class AppointmentFormController {
             tblAppointment.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     private void loadPetIds() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<PetDto> cusList = PetModel.getAllPet();
+            List<PetDto> cusList = appointmentBO.getAllPets();
 
             for (PetDto dto : cusList) {
                 obList.add(dto.getPet_id());
@@ -158,18 +165,22 @@ public class AppointmentFormController {
             cmbPetId.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
-    private void loadDoctorIds() {
+    public void loadDoctorIds() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<DoctorDto> cusList = DoctorModel.getAllDoctor();
+            List<DoctorDto> cusList = appointmentBO.getAllDoctor();
 
             for (DoctorDto dto : cusList) {
                 obList.add(dto.getId());
             }
             cmbDoctorId.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -183,9 +194,8 @@ public class AppointmentFormController {
     void btnDeleteOnAction(ActionEvent event) {
         String app_id = txtId.getText();
 
-        var AppointmentModel  = new AppointmentModel();
         try {
-            boolean isDeleted = AppointmentModel.deleteAppointment(app_id);
+            boolean isDeleted = appointmentBO.delete(app_id);
 
             if(isDeleted) {
                 tblAppointment.refresh();
@@ -196,6 +206,8 @@ public class AppointmentFormController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
 
@@ -213,28 +225,24 @@ public class AppointmentFormController {
 
         var dto = new AppointmentDto(app_id, doctor_id, pet_id, Date, Time, Number);
 
-        var model = new AppointmentModel();
 
         try {
-            boolean isSaved = model.saveAppointment(dto);
+            boolean isSaved = appointmentBO.save(dto);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Appointment saved!").show();
                 clearFields();
                 loadAllAppointment();
                 setCellValueFactory();
                 generateNextAppointmentId();
-                CustomerModel customerModel = new CustomerModel();
-                customerDto customerDto = customerModel.loadAll(appointmentDto.getApp_id());
+                customerDto customerDto = appointmentBO.loadAll(appointmentDto.getApp_id());
                 new SendMailForAppointment(doctorDto,appointmentDto,customerDto);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
         }
 
     }
-
-
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
@@ -247,11 +255,8 @@ public class AppointmentFormController {
 
         var dto = new AppointmentDto(app_id, doctor_id, pet_id, Date, Time, Number);
 
-
-        var model = new AppointmentModel();
-
         try {
-            boolean isUpdated = model.updateAppointment(dto);
+            boolean isUpdated = appointmentBO.update(dto);
             System.out.println(isUpdated);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, " Appointment updated!").show();
@@ -265,6 +270,8 @@ public class AppointmentFormController {
         catch(SQLException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
 
@@ -275,9 +282,8 @@ public class AppointmentFormController {
         String app_id = txtId.getText();
 
 
-        var model = new AppointmentModel();
         try {
-            AppointmentDto dto = model.searchAppointment(app_id);
+            AppointmentDto dto = appointmentBO.search(app_id);
 
             if(dto != null) {
                 fillFields(dto);
@@ -286,24 +292,23 @@ public class AppointmentFormController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
     @FXML
     void cmbDoctorIdOnAction(ActionEvent event) {
         try {
-
-
-            AppointmentModel appointmentModel = new AppointmentModel();
             String doctorID = cmbDoctorId.getValue();;
-            appointmentDto = appointmentModel.loadNumber(doctorID);
+            appointmentDto = appointmentBO.loadNumber(doctorID);
             if (appointmentDto==null){
                 txtNumber.setText("1");
             }else{
                 txtNumber.setText(String.valueOf(appointmentDto.getNumber()+1));
             }
-            doctorModel = new DoctorModel();
-            doctorDto = doctorModel.loadTime(doctorID);
+            doctorDto = appointmentBO.loadTime(doctorID);
+            System.out.println(doctorDto.getOutTime());
             Time outTime = doctorDto.getOutTime();
 
             int num = Integer.parseInt(txtNumber.getText());
@@ -327,6 +332,8 @@ public class AppointmentFormController {
 
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -355,10 +362,11 @@ public class AppointmentFormController {
 
     private void generateNextAppointmentId() {
         try {
-            AppointmentModel appointmentModel = new AppointmentModel();
-            String appointmentID = appointmentModel.generateNextOrderId();
+            String appointmentID = appointmentBO.generateNewID();
             txtId.setText(appointmentID);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

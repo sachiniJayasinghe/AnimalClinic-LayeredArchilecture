@@ -9,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.ConfirmPasswordBOImpl;
+import lk.ijse.animal_clinic.bo.custom.ConfirmPasswordBO;
 import lk.ijse.animal_clinic.dto.UserDto;
 import lk.ijse.animal_clinic.model.UserModel;
 
@@ -49,6 +52,8 @@ public class ConfirmPasswordFormController {
     @FXML
     private TextField txtPassword;
 
+    ConfirmPasswordBO confirmPasswordBO =  (ConfirmPasswordBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ConfirmPasswordBO);
+
     @FXML
     void btnBackOnAction(ActionEvent event) throws IOException {
 
@@ -71,9 +76,8 @@ public class ConfirmPasswordFormController {
             UserDto userDto = new UserDto(Name, pswd,id,Address, Email,image);
 
             try {
-                var user = new UserModel();
 
-                boolean isSaved = user.save(userDto);
+                boolean isSaved = confirmPasswordBO.save(userDto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Registered Successfull !").show();
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/login_form.fxml"));
@@ -84,9 +88,9 @@ public class ConfirmPasswordFormController {
             } catch (SQLException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "something went wrong!").show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
-
-
 
 
         }

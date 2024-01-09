@@ -1,6 +1,7 @@
 package lk.ijse.animal_clinic.bo;
 
 import lk.ijse.animal_clinic.bo.custom.DoctorBO;
+import lk.ijse.animal_clinic.dao.DAOFactory;
 import lk.ijse.animal_clinic.dao.custom.DoctorDAO;
 import lk.ijse.animal_clinic.dao.custom.impl.DoctorDAOImpl;
 import lk.ijse.animal_clinic.dto.DoctorDto;
@@ -9,8 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DoctorBOImpl implements DoctorBO {
+    DoctorDAO doctorDAO =  (DoctorDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Doctor);
 
-    DoctorDAO doctorDAO = new DoctorDAOImpl();
     @Override
     public ArrayList<DoctorDto> getAll() throws SQLException, ClassNotFoundException {
         return doctorDAO.getAll();
@@ -49,6 +50,6 @@ public class DoctorBOImpl implements DoctorBO {
 
     @Override
     public int getDoctorCount() throws ClassNotFoundException, SQLException {
-        return getDoctorCount();
+        return doctorDAO.getDoctorCount();
     }
 }

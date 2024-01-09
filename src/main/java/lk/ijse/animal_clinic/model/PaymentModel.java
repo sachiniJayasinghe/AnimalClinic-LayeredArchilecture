@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PaymentModel {
-    public static int search() throws SQLException {
+    public  int searchPaymentId() throws SQLException {
         Connection con = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = con.prepareStatement("SELECT MAX(p_id) FROM payment");
         int id = 0;

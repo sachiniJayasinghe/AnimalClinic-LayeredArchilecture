@@ -13,6 +13,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.SupliyerBOImpl;
+import lk.ijse.animal_clinic.bo.custom.SupliyerBO;
 import lk.ijse.animal_clinic.dto.StockDto;
 import lk.ijse.animal_clinic.dto.SupliyerDto;
 import lk.ijse.animal_clinic.dto.customerDto;
@@ -81,8 +84,11 @@ public class SupplierFormController {
     @FXML
     private TextField txtTel;
 
+
     @FXML
     private JFXComboBox<String> cmbStockId;
+
+    SupliyerBO supliyerBO = (SupliyerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.SupliyerBO);
     public void initialize() {
         setCellValueFactory();
         loadAllSupliyer();
@@ -108,12 +114,11 @@ public class SupplierFormController {
         colSupliyerAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
     }
     private void loadAllSupliyer() {
-        var model = new SupliyerModel();
 
         ObservableList<SupliyerTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<SupliyerDto> dtoList = model.getAllSupliyer();
+            List<SupliyerDto> dtoList = supliyerBO.getAll();
 
             for (SupliyerDto dto : dtoList) {
                 obList.add(
@@ -130,7 +135,7 @@ public class SupplierFormController {
             }
 
             tblSupliyer.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -144,9 +149,9 @@ public class SupplierFormController {
     void btnDeleteOnAction(ActionEvent event) {
         String supliyer_id = txtSupliyerId.getText();
 
-        var model = new SupliyerModel();
-        try {
-            boolean isDeleted = model.deleteSupliyer(supliyer_id);
+        try {        var model = new SupliyerModel();
+
+            boolean isDeleted = supliyerBO.delete(supliyer_id);
             tblSupliyer.refresh();
             if (isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "delectd").show();
@@ -154,7 +159,7 @@ public class SupplierFormController {
                 loadAllSupliyer();
 
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
 
         }
@@ -164,13 +169,13 @@ public class SupplierFormController {
     private void loadStockIds() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<StockDto> stockList = StockModel.getAllStock();
+            List<StockDto> stockList = supliyerBO.getAllStock();
 
             for (StockDto dto : stockList) {
                 obList.add(dto.getStock_id());
             }
             cmbStockId.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -213,11 +218,8 @@ public class SupplierFormController {
             String address = txtAdress.getText();
 
             var dto = new SupliyerDto(supliyer_id, stock_id, supliyer_name, tel, e_mail, address);
-
-            var model = new SupliyerModel();
-
             try {
-                boolean isSaved = model.saveSupliyer(dto);
+                boolean isSaved = supliyerBO.save(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "supliyer saved!").show();
                     clearFields();
@@ -225,7 +227,7 @@ public class SupplierFormController {
                     loadAllSupliyer();
 
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
 
@@ -297,10 +299,8 @@ public class SupplierFormController {
 
         var dto = new SupliyerDto( supliyer_id, stock_id, supliyer_name,tel , e_mail,address);
 
-        var model = new SupliyerModel();
-
         try {
-            boolean isUpdated = model.updateSupliyer(dto);
+            boolean isUpdated = supliyerBO.update(dto);
             System.out.println(isUpdated);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, " supliyer updated!").show();
@@ -311,7 +311,7 @@ public class SupplierFormController {
             }
 
         }
-        catch(SQLException e){
+        catch(SQLException | ClassNotFoundException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
         }
@@ -328,18 +328,16 @@ public class SupplierFormController {
     @FXML
     void txtSearchOnAction(ActionEvent event) {
         String supliyer_id = txtSupliyerId.getText();
-        var model = new SupliyerModel();
-
 
         try {
-            SupliyerDto dto = model.searchSupliyer(supliyer_id);
+            SupliyerDto dto = supliyerBO.search(supliyer_id);
 
             if(dto != null) {
                 fillFields(dto);
             } else {
                 new Alert(Alert.AlertType.INFORMATION, "supliyer not found!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 

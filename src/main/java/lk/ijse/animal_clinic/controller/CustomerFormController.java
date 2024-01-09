@@ -16,6 +16,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.CustomerBOImpl;
+import lk.ijse.animal_clinic.bo.custom.CustomerBO;
 import lk.ijse.animal_clinic.dto.customerDto;
 import lk.ijse.animal_clinic.dto.tm.CustomerTm;
 import lk.ijse.animal_clinic.model.CustomerModel;
@@ -78,6 +81,8 @@ public class CustomerFormController {
 
     @FXML
     private TextField txtTel;
+
+    CustomerBO customerBO =  (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CustomerBO);
     public void initialize() {
 
         String css = getClass().getResource("/sheets/tableSheet.css").toExternalForm();
@@ -103,12 +108,11 @@ public class CustomerFormController {
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
     }
     private void loadAllCustomers() {
-        var model = new CustomerModel();
 
         ObservableList<CustomerTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<customerDto> dtoList = model.getAllCustomers();
+            List<customerDto> dtoList = customerBO.getAll();
 
             for(customerDto dto : dtoList) {
                 obList.add(
@@ -126,6 +130,8 @@ public class CustomerFormController {
             tblCustomer.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -134,9 +140,8 @@ public class CustomerFormController {
 
         String id = txtId.getText();
 
-        var model = new CustomerModel();
         try {
-            customerDto dto = model.searchCustomer(id);
+            customerDto dto = customerBO.search(id);
 
             if(dto != null) {
                 fillFields(dto);
@@ -145,6 +150,8 @@ public class CustomerFormController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
     private void fillFields(customerDto dto) {
@@ -182,9 +189,8 @@ public class CustomerFormController {
     void btnDeleteOnAction(ActionEvent event) {
         String id = txtId.getText();
 
-        var customerModel = new CustomerModel();
         try {
-            boolean isDeleted = customerModel.deleteCustomer(id);
+            boolean isDeleted = customerBO.delete(id);
 
             if(isDeleted) {
                 tblCustomer.refresh();
@@ -195,6 +201,8 @@ public class CustomerFormController {
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -234,10 +242,9 @@ public class CustomerFormController {
 
             var dto = new customerDto(id, name, tel, email, address);
 
-            var model = new CustomerModel();
 
             try {
-                boolean isSaved = model.saveCustomer(dto);
+                boolean isSaved = customerBO.save(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
                     loadAllCustomers();
@@ -247,6 +254,8 @@ public class CustomerFormController {
                 }
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
 
         }
@@ -313,10 +322,9 @@ public class CustomerFormController {
 
         var dto = new customerDto(id,name,tel,email,address);
 
-        var model = new CustomerModel();
 
         try {
-            boolean isUpdated = model.updateCustomer(dto);
+            boolean isUpdated = customerBO.update(dto);
             System.out.println(isUpdated);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, " customer updated!").show();
@@ -329,6 +337,8 @@ public class CustomerFormController {
         catch(SQLException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
 
@@ -343,10 +353,11 @@ public class CustomerFormController {
 
     private void generateNextCustomerId() {
         try {
-            CustomerModel customerModel = new CustomerModel();
-            String customerID = customerModel.generateNextCustomerID();
+            String customerID = customerBO.generateNewID();
             txtId.setText(customerID);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

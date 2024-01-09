@@ -102,5 +102,32 @@ public class StockModel {
         }
         return dtoList;
     }
+    public String generateNextStockID() throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "SELECT stock_id FROM stock ORDER BY stock_id DESC LIMIT 1";
+        ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
+
+        String currentOrderId = null;
+
+        if (resultSet.next()) {
+            currentOrderId = resultSet.getString(1);
+            return splitOrderId(currentOrderId);
+        }
+        return splitOrderId(null);
+    }
+
+    private String splitOrderId(String currentOrderId) {
+        if (currentOrderId != null) {
+            String[] split = currentOrderId.split("ST");
+            int id = Integer.parseInt(split[1]);
+            id++;
+
+            String formattedId = String.format("%03d", id);
+
+            return "ST" + formattedId;
+        }
+        return "ST001";
+    }
     }
 

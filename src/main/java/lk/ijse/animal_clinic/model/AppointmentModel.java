@@ -31,7 +31,7 @@ public class AppointmentModel {
     public boolean updateAppointment(final AppointmentDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
-        String sql = "UPDATE appointements SET  doctor_id = ? , pet_id = ? , date=? , time= ? , Number = ?  WHERE app_id =?";
+        String sql = "UPDATE appointements SET  doctor_id = ? , pet_id = ? , date=? , time= ?, N umber = ?  WHERE app_id =?";
         PreparedStatement pstm = connection.prepareStatement(sql);
 
 

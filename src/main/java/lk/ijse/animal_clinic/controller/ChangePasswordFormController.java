@@ -8,6 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.ChangePasswordBOImpl;
+import lk.ijse.animal_clinic.bo.custom.ChangePasswordBO;
 import lk.ijse.animal_clinic.model.UserModel;
 
 import java.sql.SQLException;
@@ -21,16 +24,18 @@ public class ChangePasswordFormController {
 
     @FXML
     private TextField txtPswd;
+    ChangePasswordBO changePasswordBO =  (ChangePasswordBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ChangePasswordBO);
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
         if (txtPswd.getText().equals(LoginFormController.password)) {
 
             try {
-                UserModel userModel = new UserModel();
-                boolean isUpdated = userModel.updatePassword(txtConfirmPswd.getText(), LoginFormController.userID);
+                boolean isUpdated = changePasswordBO.updatePassword(txtConfirmPswd.getText(), LoginFormController.userID);
             }catch (SQLException e){
 
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         } else {
             System.out.println("Password Not Matched");

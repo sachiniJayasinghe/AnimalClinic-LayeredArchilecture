@@ -14,6 +14,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.PetBOImpl;
+import lk.ijse.animal_clinic.bo.custom.PetBO;
 import lk.ijse.animal_clinic.dto.AppointmentDto;
 import lk.ijse.animal_clinic.dto.PetDto;
 import lk.ijse.animal_clinic.dto.customerDto;
@@ -82,7 +85,7 @@ public class PetFormController {
     private JFXComboBox<String> cmbCusId;
 
 
-
+   PetBO petBO = (PetBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PetBO);
 
     @FXML
     void btnBackOnAction(ActionEvent event) {
@@ -113,12 +116,11 @@ public class PetFormController {
         colCusId .setCellValueFactory(new PropertyValueFactory<>("cus_id"));
     }
     private void loadAllPet() {
-        var model = new PetModel();
 
         ObservableList<PetTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<PetDto> dtoList = model.getAllPet();
+            List<PetDto> dtoList =petBO.getAll();
 
             for(PetDto dto : dtoList) {
                 obList.add(
@@ -133,7 +135,7 @@ public class PetFormController {
                 );
             }
             tblPet.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -141,13 +143,13 @@ public class PetFormController {
     private void loadCustomerIds() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<customerDto> cusList = CustomerModel.getAllCustomers();
+            List<customerDto> cusList = petBO.getAllCustomers();
 
             for (customerDto dto : cusList) {
                 obList.add(dto.getId());
             }
             cmbCusId.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -172,10 +174,8 @@ public class PetFormController {
 
         String pet_id = txtId.getText();
 
-        var petModel = new PetModel();
-
         try{
-            boolean isDeleted = petModel.deletePet(pet_id);
+            boolean isDeleted = petBO.delete(pet_id);
             tblPet.refresh();
             if(isDeleted){
                 new Alert(Alert.AlertType.CONFIRMATION,"PET deleted").show();
@@ -183,7 +183,7 @@ public class PetFormController {
                 loadAllPet();
                 generateNextPetId();
             }
-        }catch (SQLException e){
+        }catch (SQLException | ClassNotFoundException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
@@ -223,9 +223,8 @@ public class PetFormController {
 
             var dto = new PetDto(pet_id, name, pet_type, age, cus_id);
 
-            var model = new PetModel();
             try {
-                boolean isSaved = model.savePet(dto);
+                boolean isSaved = petBO.save(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "customer saved!").show();
                     clearFields();
@@ -234,7 +233,7 @@ public class PetFormController {
                     generateNextPetId();
 
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
         }
@@ -291,7 +290,7 @@ public class PetFormController {
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
+    void btnUpdateOnAction(ActionEvent event) throws ClassNotFoundException {
         String pet_id = txtId.getText();
         String name = txtName.getText();
         String pet_type = txtType.getText();
@@ -300,10 +299,9 @@ public class PetFormController {
 
 
         var dto = new PetDto(pet_id,name,pet_type,age,cus_id);
-        var model = new PetModel();
 
         try{
-            boolean isUpdated = model.updatePet(dto);
+            boolean isUpdated = petBO.update(dto);
             System.out.println(isUpdated);
 
             if( isUpdated){
@@ -316,12 +314,10 @@ public class PetFormController {
         }
     }
     @FXML
-    void txtSearchOnAction(ActionEvent event) {
+    void txtSearchOnAction(ActionEvent event) throws ClassNotFoundException {
         String pet_id = txtId.getText();
-
-        var model =  new PetModel();
         try {
-            PetDto dto = PetModel.searchPet(pet_id);
+            PetDto dto = petBO.search(pet_id);
             if(dto!= null){
                 fillFields(dto);
             }else {
@@ -349,10 +345,9 @@ public class PetFormController {
 
     private void generateNextPetId() {
         try {
-            PetModel petModel = new PetModel();
-            String orderId = petModel.generateNextPetId();
+            String orderId = petBO.generateNewID();
             txtId.setText(orderId);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.VaccinationsBOImpl;
+import lk.ijse.animal_clinic.bo.custom.VaccinationsBO;
 import lk.ijse.animal_clinic.dto.AppointmentDto;
 import lk.ijse.animal_clinic.dto.TreatementDto;
 import lk.ijse.animal_clinic.dto.tm.AppointmentTm;
@@ -57,6 +60,7 @@ public class VaccinationFormController {
     @FXML
     private TextField txtVaccinationId;
 
+    VaccinationsBO vaccinationsBO = (VaccinationsBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.VaccinationsBO);
     public void initialize() {
         setCellValueFactory();
         loadAllVaccination();
@@ -70,12 +74,11 @@ public class VaccinationFormController {
     }
 
     private void loadAllVaccination() {
-        var model = new VaccinationModel();
 
         ObservableList<vaccinationsTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<vaccinationsDto> dtoList = model.getAllVaccinatoin();
+            List<vaccinationsDto> dtoList = vaccinationsBO.getAll();
 
             for(vaccinationsDto dto : dtoList) {
                 obList.add(
@@ -89,7 +92,7 @@ public class VaccinationFormController {
             }
 
             tblVaccination.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -106,10 +109,9 @@ public class VaccinationFormController {
     void btnDeleteOnAction(ActionEvent event) {
 
         String vaccination_id = txtVaccinationId.getText();
-        var VaccinationModel = new VaccinationModel();
 
         try {
-            boolean isDeleted = VaccinationModel.VaccinationModel(vaccination_id);
+            boolean isDeleted = vaccinationsBO.delete(vaccination_id);
 
             if(isDeleted) {
                 tblVaccination.refresh();
@@ -119,7 +121,7 @@ public class VaccinationFormController {
                 loadAllVaccination();
 
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
@@ -158,10 +160,9 @@ public class VaccinationFormController {
 
             var dto = new vaccinationsDto(vaccination_id, vaccine_name, Date);
 
-            var model = new VaccinationModel();
 
             try {
-                boolean isSaved = model.saveVaccination(dto);
+                boolean isSaved = vaccinationsBO.save(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, " saved!").show();
                     clearFields();
@@ -169,7 +170,7 @@ public class VaccinationFormController {
                     loadAllVaccination();
 
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
             }
@@ -213,9 +214,8 @@ public class VaccinationFormController {
         Date Date = java.sql.Date.valueOf(txtDate.getValue());
 
         var dto = new vaccinationsDto(vaccination_id,vaccine_name,Date);
-        var model = new VaccinationModel();
         try {
-            boolean isUpdated = model.updateVaccination(dto);
+            boolean isUpdated = vaccinationsBO.update(dto);
             System.out.println(isUpdated);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "  updated!").show();
@@ -226,7 +226,7 @@ public class VaccinationFormController {
             }
 
         }
-        catch(SQLException e){
+        catch(SQLException | ClassNotFoundException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
         }
@@ -235,16 +235,15 @@ public class VaccinationFormController {
     @FXML
     void txtSearchOnAction(ActionEvent event) {
         String vaccination_id = txtVaccinationId.getText();
-        var model = new VaccinationModel();
         try {
-            vaccinationsDto dto = model.searchVaccination(vaccination_id);
+            vaccinationsDto dto = vaccinationsBO.search(vaccination_id);
 
             if(dto != null) {
                 fillFields(dto);
             } else {
                 new Alert(Alert.AlertType.INFORMATION, " not found!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
         }

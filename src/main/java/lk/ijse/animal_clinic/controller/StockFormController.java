@@ -12,13 +12,19 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.StockBOImpl;
+import lk.ijse.animal_clinic.bo.custom.StockBO;
 import lk.ijse.animal_clinic.dto.StockDto;
 import lk.ijse.animal_clinic.dto.tm.StockTm;
 import lk.ijse.animal_clinic.model.StockModel;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -62,6 +68,8 @@ public class StockFormController {
 
     @FXML
     private TextField txtStockId;
+
+    StockBO stockBO = (StockBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.StockBO);
     public void initialize() {
         setCellValueFactory();
         loadAllStock();
@@ -79,12 +87,11 @@ public class StockFormController {
 
 
     private void loadAllStock() {
-        var model = new StockModel();
 
         ObservableList<StockTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<StockDto> dtoList = model.getAllStock();
+            List<StockDto> dtoList = stockBO.getAll();
 
             for(StockDto dto : dtoList) {
                 obList.add(
@@ -99,7 +106,7 @@ public class StockFormController {
             }
 
             tblStock.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -114,11 +121,8 @@ public class StockFormController {
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
         String stock_id = txtStockId.getText();
-        var StockModel  = new StockModel();
-
-
         try {
-            boolean isDeleted = StockModel.StockModel(stock_id);
+            boolean isDeleted = stockBO.delete(stock_id);
 
             if(isDeleted) {
                 tblStock.refresh();
@@ -127,7 +131,7 @@ public class StockFormController {
                 setCellValueFactory();
                 loadAllStock();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
@@ -165,10 +169,9 @@ public class StockFormController {
 
             var dto = new StockDto(stock_id, category, date);
 
-            var model = new StockModel();
 
             try {
-                boolean isSaved = model.saveStock(dto);
+                boolean isSaved = stockBO.save(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, " saved!").show();
                     clearFields();
@@ -176,7 +179,7 @@ public class StockFormController {
                     loadAllStock();
 
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
             }
@@ -214,11 +217,8 @@ public class StockFormController {
         Date date = java.sql.Date.valueOf(txtDate.getValue());
 
         var dto = new StockDto(stock_id,category,date);
-
-        var model = new StockModel();
-
         try {
-            boolean isUpdated = model.updateStock(dto);
+            boolean isUpdated = stockBO.update(dto);
             System.out.println(isUpdated);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "  updated!").show();
@@ -228,24 +228,22 @@ public class StockFormController {
 
             }
         }
-        catch(SQLException e){
+        catch(SQLException | ClassNotFoundException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
     @FXML
     void txtSearchOnAction(ActionEvent event) {
         String stock_id = txtStockId.getText();
-
-        var model = new StockModel();
         try {
-            StockDto dto = model.searchStock(stock_id);
+            StockDto dto = stockBO.search(stock_id);
 
             if(dto != null) {
                 fillFields(dto);
             } else {
                 new Alert(Alert.AlertType.INFORMATION, " not found!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
         }
@@ -260,6 +258,16 @@ public class StockFormController {
     void clearFields() {
         txtStockId.setText("");
         txtCategory .setText("");
+    }
+    private void generateNextStockId() {
+        try {
+            String stockID =stockBO.generateNewID();
+            txtStockId.setText(stockID);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

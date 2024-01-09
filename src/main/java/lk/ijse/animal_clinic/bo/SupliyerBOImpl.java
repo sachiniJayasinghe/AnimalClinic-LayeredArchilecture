@@ -1,15 +1,22 @@
 package lk.ijse.animal_clinic.bo;
 
 import lk.ijse.animal_clinic.bo.custom.SupliyerBO;
+import lk.ijse.animal_clinic.dao.DAOFactory;
+import lk.ijse.animal_clinic.dao.custom.StockDAO;
 import lk.ijse.animal_clinic.dao.custom.SupliyerDAO;
+import lk.ijse.animal_clinic.dao.custom.impl.StockDAOImpl;
 import lk.ijse.animal_clinic.dao.custom.impl.SupliyerDAOImpl;
+import lk.ijse.animal_clinic.dto.StockDto;
 import lk.ijse.animal_clinic.dto.SupliyerDto;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SupliyerBOImpl implements SupliyerBO {
-    SupliyerDAO supliyerDAO = new SupliyerDAOImpl();
+    SupliyerDAO supliyerDAO =  (SupliyerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Supliyer);
+
+    StockDAO stockDAO =  (StockDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Stock);
     @Override
     public ArrayList<SupliyerDto> getAll() throws SQLException, ClassNotFoundException {
         return supliyerDAO.getAll() ;
@@ -44,5 +51,10 @@ public class SupliyerBOImpl implements SupliyerBO {
     @Override
     public SupliyerDto search(String id) throws SQLException, ClassNotFoundException {
         return supliyerDAO.search(id);
+    }
+
+    @Override
+    public List<StockDto> getAllStock() throws SQLException, ClassNotFoundException {
+        return stockDAO.getAll();
     }
 }

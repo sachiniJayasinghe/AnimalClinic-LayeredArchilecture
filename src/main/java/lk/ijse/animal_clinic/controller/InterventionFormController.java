@@ -16,6 +16,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.InterventionBOImpl;
+import lk.ijse.animal_clinic.bo.custom.InterventionBO;
 import lk.ijse.animal_clinic.db.DbConnection;
 import lk.ijse.animal_clinic.dto.*;
 import lk.ijse.animal_clinic.dto.tm.DoctorTm;
@@ -86,7 +89,7 @@ public class InterventionFormController {
 
     static double total = 0;
 
-
+ InterventionBO interventionBO = (InterventionBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.InterventionBO);
     public void initialize()  {
         loadAppointmentIds();
         loadTreatmentType();
@@ -94,19 +97,16 @@ public class InterventionFormController {
     }
 
     @FXML
-    void btnPayOnAction(ActionEvent event) throws SQLException {
+    void btnPayOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
 
         boolean isPlaced = false;
 
-        var model = new TreatementModel();
+
+        String threatmentId = interventionBO.getThreatmentId(cmbThreatmentName.getValue());
 
 
-        String threatmentId = model.getThreatmentId(cmbThreatmentName.getValue());
-
-
-        var model1 = new PaymentModel();
         try {
-            isPlaced = model1.savePayment(cmbAppointmentID.getValue(),threatmentId,LoadPayementID(), total);
+            isPlaced = interventionBO.savePayment(cmbAppointmentID.getValue(),threatmentId,LoadPayementID(), total);
         } catch (SQLException ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();
         }
@@ -119,9 +119,8 @@ public class InterventionFormController {
             tblTreatementDetals.getItems().clear();
             ThreatmentDetailModel ob = new ThreatmentDetailModel();
             String customerId = ob.getCustomerId(app_id);
-            var customerModel = new CustomerModel();
             try {
-                customerDto dto = customerModel.searchCustomer(customerId);
+                customerDto dto = interventionBO.search(customerId);
 
                 if(dto != null) {
                     new sendMail(dto.getName(),app_id, LocalDate.now(), LocalTime.now(),total,dto.getEmail());
@@ -199,12 +198,11 @@ public class InterventionFormController {
     }
 
     @FXML
-    void cmbThreatmentNameOnAction(ActionEvent event) throws SQLException {
-        var model = new TreatementModel();
+    void cmbThreatmentNameOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        double num = model.getCost(cmbThreatmentName.getValue());
+        double num = interventionBO.getCost(cmbThreatmentName.getValue());
         total += num;
-        String threatmentId = model.getThreatmentId(cmbThreatmentName.getValue());
+        String threatmentId = interventionBO.getThreatmentId(cmbThreatmentName.getValue());
         System.out.println(threatmentId);
         txtTotal.setText(String.valueOf(total));
 
@@ -216,10 +214,9 @@ public class InterventionFormController {
                 0.0
         );
 
-        var model1 = new ThreatmentDetailModel();
 
         try {
-            boolean isSaved = model1.saveThreatmentDetails(dto);
+            boolean isSaved = interventionBO.save(dto);
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "ThreatmentDetails SAVED").show();
                 loadThreatmentDetails(cmbAppointmentID.getValue(), threatmentId, num, cmbThreatmentName.getValue(), total);
@@ -254,13 +251,13 @@ public class InterventionFormController {
     private void loadAppointmentIds() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<AppointmentDto> appList = AppointmentModel.getAllAppointment();
+            List<AppointmentDto> appList = interventionBO.getAll();
 
             for (AppointmentDto dto : appList) {
                 obList.add(dto.getApp_id());
             }
             cmbAppointmentID.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -268,19 +265,19 @@ public class InterventionFormController {
     private void loadTreatmentType() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<TreatementDto> appList = TreatementModel.getAllTreatement();
+            List<TreatementDto> appList = interventionBO.getAllTreatement();
 
             for (TreatementDto dto : appList) {
                 obList.add(dto.getType());
             }
             cmbThreatmentName.setItems(obList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     private String LoadPayementID() throws SQLException {
-        int id = PaymentModel.search();
+        int id = interventionBO.searchPaymentId();
         int idl = id+1;
         String id1 = String.valueOf(idl);
         System.out.println(idl);

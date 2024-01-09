@@ -165,12 +165,12 @@ public class DoctorModel {
             String id = resultSet.getString(1);
             String name = resultSet.getString(2);
             String tel = resultSet.getString(3);
-            String e_mail = resultSet.getString(4);
-            String address = resultSet.getString(5);
+            String address = resultSet.getString(4);
+            String e_mail = resultSet.getString(5);
             Time comeInTime = resultSet.getTime(6);
             Time outTime = resultSet.getTime(7);
 
-            dto = new DoctorDto(id, name, tel,e_mail,address,comeInTime,outTime);
+            dto = new DoctorDto(id, name, tel,address,e_mail,comeInTime,outTime);
         }
         return  dto;
     }

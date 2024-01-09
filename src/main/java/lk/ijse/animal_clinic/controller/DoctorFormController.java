@@ -12,6 +12,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
+import lk.ijse.animal_clinic.bo.BOFactory;
+import lk.ijse.animal_clinic.bo.DoctorBOImpl;
+import lk.ijse.animal_clinic.bo.custom.DoctorBO;
 import lk.ijse.animal_clinic.dto.DoctorDto;
 import lk.ijse.animal_clinic.dto.tm.DoctorTm;
 import lk.ijse.animal_clinic.model.DoctorModel;
@@ -77,6 +80,8 @@ public class DoctorFormController {
     @FXML
     private TableColumn<?, ?> colOutTime;
 
+    DoctorBO doctorBO = (DoctorBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DoctorBO);
+
     public void initialize() {
         setCellValueFactory();
         loadAllDoctor();
@@ -89,18 +94,17 @@ public class DoctorFormController {
         colDoctorId   .setCellValueFactory(new PropertyValueFactory<>("id"));
         colDoctorName  .setCellValueFactory(new PropertyValueFactory<>("name"));
         colDoctorTel .setCellValueFactory(new PropertyValueFactory<>("tel"));
-        colDoctorEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colDoctorAddress .setCellValueFactory(new PropertyValueFactory<>("address"));
+        colDoctorAddress .setCellValueFactory(new PropertyValueFactory<>("email"));
+        colDoctorEmail.setCellValueFactory(new PropertyValueFactory<>("address"));
         colComeInTime.setCellValueFactory(new PropertyValueFactory<>("comeInTime"));
         colOutTime.setCellValueFactory(new PropertyValueFactory<>("outTime"));
     }
     private void loadAllDoctor() {
-        var model = new DoctorModel();
 
         ObservableList<DoctorTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<DoctorDto> dtoList = model.getAllDoctor();
+            List<DoctorDto> dtoList = doctorBO.getAll();
 
             for(DoctorDto dto : dtoList) {
                 obList.add(
@@ -108,8 +112,8 @@ public class DoctorFormController {
                                 dto.getId(),
                                 dto.getName(),
                                 dto.getTel(),
-                                dto.getEmail(),
                                 dto.getAddress(),
+                                dto.getEmail(),
                                 dto.getComeInTime(),
                                 dto.getOutTime()
                         )
@@ -118,6 +122,8 @@ public class DoctorFormController {
 
             tblDoctor.setItems(obList);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }    @FXML
@@ -135,9 +141,8 @@ public class DoctorFormController {
     void btnDeleteOnAction(ActionEvent event) {
         String doctor_id = txtId.getText();
 
-        var model = new DoctorModel();
         try {
-            boolean isDeleted = model.doctorDelete(doctor_id);
+            boolean isDeleted = doctorBO.delete(doctor_id);
             tblDoctor.refresh();
 
             if (isDeleted) {
@@ -150,6 +155,8 @@ public class DoctorFormController {
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
 
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
     private void vibrateTextField(TextField textField) {
@@ -184,16 +191,15 @@ public class DoctorFormController {
             String doctor_id = txtId.getText();
             String doctor_name = txtName.getText();
             String tel = txtTel.getText();
-            String e_mail = txtEmail.getText();
             String address = txtAddress.getText();
+            String e_mail = txtEmail.getText();
             Time comeInTime = java.sql.Time.valueOf(txtComeInTime.getText());
             Time outTime = java.sql.Time.valueOf(txtOutTime.getText());
 
-            var dto = new DoctorDto(doctor_id, doctor_name, tel, e_mail, address, comeInTime, outTime);
-            var model = new DoctorModel();
+            var dto = new DoctorDto(doctor_id, doctor_name, tel,e_mail,address, comeInTime, outTime);
 
             try {
-                boolean isSaved = model.saveDoctor(dto);
+                boolean isSaved = doctorBO.save(dto);
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "DOCTOR SAVED").show();
                     clearFields();
@@ -203,6 +209,8 @@ public class DoctorFormController {
                 }
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
 
         }
@@ -260,18 +268,16 @@ public class DoctorFormController {
         String doctor_id = txtId.getText();
         String doctor_name = txtName.getText();
         String tel = txtTel.getText();
-        String e_mail = txtEmail.getText();
         String address = txtAddress.getText();
+        String e_mail = txtEmail.getText();
         Time comeInTime = java.sql.Time.valueOf(txtComeInTime.getText());
         Time outTime = java.sql.Time.valueOf(txtOutTime.getText());
 
-        var dto = new DoctorDto(doctor_id ,doctor_name, tel,e_mail,address,comeInTime,outTime);
+        var dto = new DoctorDto(doctor_id ,doctor_name, tel,address,e_mail,comeInTime,outTime);
 
-
-        var model = new DoctorModel();
 
         try {
-            boolean isUpdated = model.updateDoctor(dto);
+            boolean isUpdated = doctorBO.update(dto);
             System.out.println(isUpdated);
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, " Doctor updated!").show();
@@ -284,8 +290,9 @@ public class DoctorFormController {
         catch(SQLException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
 
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-
 
 
     }
@@ -294,9 +301,8 @@ public class DoctorFormController {
     void txtSearchOnAction(ActionEvent event) {
         String doctor_id = txtId.getText();
 
-        var model = new DoctorModel();
         try{
-            DoctorDto dto = model.searchDoctor(doctor_id);
+            DoctorDto dto = doctorBO.search(doctor_id);
             if(dto!=null){
                 fillFields(dto);
             }else{
@@ -306,6 +312,8 @@ public class DoctorFormController {
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
 
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -313,8 +321,9 @@ public class DoctorFormController {
         txtId.setText(dto.getId());
         txtName.setText(dto.getName());
         txtTel.setText(dto.getTel());
-        txtEmail.setText(dto.getEmail());
         txtAddress.setText(dto.getAddress());
+        txtEmail.setText(dto.getEmail());
+
         txtComeInTime.setText(String.valueOf(dto.getComeInTime()));
         txtOutTime.setText(String.valueOf(dto.getOutTime()));
     }
@@ -331,10 +340,11 @@ public class DoctorFormController {
 
     private void generateNextOrderId() {
         try {
-            DoctorModel doctorModel = new DoctorModel();
-            String doctorId = doctorModel.generateNextDoctorId();
+            String doctorId = doctorBO.generateNewID();
             txtId.setText(doctorId);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
