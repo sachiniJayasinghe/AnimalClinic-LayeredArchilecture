@@ -67,10 +67,9 @@ public class StockDAOImpl implements StockDAO {
 
     @Override
     public StockDto search(String stockId) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM stock WHERE stock_id = ?";
         ResultSet rst = SQLUtil.execute("SELECT * FROM stock WHERE stock_id = ?", stockId);
         rst.next();
-        return new StockDto(stockId + "", rst.getString("category "), rst.getDate("date"));
+        return new StockDto(stockId + "", rst.getString("category"), rst.getDate("date"));
 
 
     }

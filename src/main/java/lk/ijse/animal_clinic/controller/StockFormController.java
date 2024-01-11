@@ -17,7 +17,6 @@ import lk.ijse.animal_clinic.bo.StockBOImpl;
 import lk.ijse.animal_clinic.bo.custom.StockBO;
 import lk.ijse.animal_clinic.dto.StockDto;
 import lk.ijse.animal_clinic.dto.tm.StockTm;
-import lk.ijse.animal_clinic.model.StockModel;
 
 import java.io.IOException;
 import java.net.Socket;

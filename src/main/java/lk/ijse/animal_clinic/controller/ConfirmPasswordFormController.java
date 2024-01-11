@@ -13,7 +13,6 @@ import lk.ijse.animal_clinic.bo.BOFactory;
 import lk.ijse.animal_clinic.bo.ConfirmPasswordBOImpl;
 import lk.ijse.animal_clinic.bo.custom.ConfirmPasswordBO;
 import lk.ijse.animal_clinic.dto.UserDto;
-import lk.ijse.animal_clinic.model.UserModel;
 
 import java.io.IOException;
 import java.sql.SQLException;

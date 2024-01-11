@@ -3,10 +3,7 @@ package lk.ijse.animal_clinic.bo;
 import lk.ijse.animal_clinic.bo.custom.AppointmentBO;
 import lk.ijse.animal_clinic.bo.custom.DoctorBO;
 import lk.ijse.animal_clinic.dao.DAOFactory;
-import lk.ijse.animal_clinic.dao.custom.AppointmentDAO;
-import lk.ijse.animal_clinic.dao.custom.CustomerDAO;
-import lk.ijse.animal_clinic.dao.custom.DoctorDAO;
-import lk.ijse.animal_clinic.dao.custom.PetDAO;
+import lk.ijse.animal_clinic.dao.custom.*;
 import lk.ijse.animal_clinic.dao.custom.impl.AppointmentDAOImpl;
 import lk.ijse.animal_clinic.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.animal_clinic.dao.custom.impl.DoctorDAOImpl;
@@ -23,10 +20,10 @@ public class AppointementBOImpl implements AppointmentBO {
 
     PetDAO petDAO = (PetDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Pet);
     CustomerDAO customerDAO= (CustomerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Customer);
-
     DoctorDAO doctorDAO =  (DoctorDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Doctor);
     AppointmentDAO appointmentDAO = (AppointmentDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Appointement);
 
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Query);
     @Override
     public ArrayList<AppointmentDto> getAll() throws SQLException, ClassNotFoundException {
         return appointmentDAO.getAll();
@@ -82,9 +79,8 @@ public class AppointementBOImpl implements AppointmentBO {
         return doctorDAO.loadTime(doctorID);
 
     }
-
     @Override
     public customerDto loadAll(String appId) throws SQLException, ClassNotFoundException {
-        return customerDAO.loadAll(appId);
+        return queryDAO.loadAll(appId);
     }
 }

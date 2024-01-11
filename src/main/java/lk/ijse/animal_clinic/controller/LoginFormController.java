@@ -16,7 +16,6 @@ import lk.ijse.animal_clinic.bo.BOFactory;
 import lk.ijse.animal_clinic.bo.LoginFormBOImpl;
 import lk.ijse.animal_clinic.bo.custom.LoginFormBO;
 import lk.ijse.animal_clinic.dto.UserDto;
-import lk.ijse.animal_clinic.model.UserModel;
 
 import java.io.IOException;
 import java.net.URL;

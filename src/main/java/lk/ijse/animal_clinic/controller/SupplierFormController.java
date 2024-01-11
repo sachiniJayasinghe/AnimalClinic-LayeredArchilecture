@@ -14,15 +14,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import lk.ijse.animal_clinic.bo.BOFactory;
-import lk.ijse.animal_clinic.bo.SupliyerBOImpl;
 import lk.ijse.animal_clinic.bo.custom.SupliyerBO;
 import lk.ijse.animal_clinic.dto.StockDto;
 import lk.ijse.animal_clinic.dto.SupliyerDto;
-import lk.ijse.animal_clinic.dto.customerDto;
 import lk.ijse.animal_clinic.dto.tm.SupliyerTm;
-import lk.ijse.animal_clinic.model.CustomerModel;
-import lk.ijse.animal_clinic.model.StockModel;
-import lk.ijse.animal_clinic.model.SupliyerModel;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -149,7 +144,7 @@ public class SupplierFormController {
     void btnDeleteOnAction(ActionEvent event) {
         String supliyer_id = txtSupliyerId.getText();
 
-        try {        var model = new SupliyerModel();
+        try {
 
             boolean isDeleted = supliyerBO.delete(supliyer_id);
             tblSupliyer.refresh();
@@ -242,16 +237,16 @@ public class SupplierFormController {
         boolean isSupliyerIdValidated = Pattern.matches("[S][P][0-9]{3,}", supliyer_id);
         if (!isSupliyerIdValidated) {
             vibrateTextField(txtSupliyerId);
-           // new Alert(Alert.AlertType.ERROR, "INVALID Id").show();
-           num =1;
+            // new Alert(Alert.AlertType.ERROR, "INVALID Id").show();
+            num =1;
         }
 
         String supliyer_name = txtName.getText();
         boolean isSupliyerNameValidated = Pattern.matches("[A-Za-z]{3,}", supliyer_name);
         if (!isSupliyerNameValidated) {
             vibrateTextField(txtName);
-           // new Alert(Alert.AlertType.ERROR, "INVALID Name").show();
-           num=1;
+            // new Alert(Alert.AlertType.ERROR, "INVALID Name").show();
+            num=1;
         }
 
 
@@ -267,7 +262,7 @@ public class SupplierFormController {
         boolean isSupliyerEmailValidated = Pattern.matches("[a-z].*(com|lk)", e_mail);
         if (!isSupliyerEmailValidated) {
             vibrateTextField(txtEmail);
-           // new Alert(Alert.AlertType.ERROR, "INVALID Email").show();
+            // new Alert(Alert.AlertType.ERROR, "INVALID Email").show();
             num=1;
         }
         String address = txtAdress.getText();

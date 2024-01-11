@@ -35,8 +35,8 @@ public class PetDAOImpl implements PetDAO {
 
     @Override
     public boolean update(PetDto dto) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute("Update pet SET name =?, pet_type=?, age=?,cus_id =? WHERE pet_id =?",
-                dto.getName(), dto.getPet_type(), dto.getAge(), dto.getCus_id(),dto.getPet_id());
+        return SQLUtil.execute("Update pet SET name =?, age=?,pet_type=?,cus_id =? WHERE pet_id =?",
+                dto.getName(),  dto.getAge(),dto.getPet_type(), dto.getCus_id(),dto.getPet_id());
 
 
     }

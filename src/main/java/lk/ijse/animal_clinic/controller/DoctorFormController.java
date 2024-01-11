@@ -17,7 +17,6 @@ import lk.ijse.animal_clinic.bo.DoctorBOImpl;
 import lk.ijse.animal_clinic.bo.custom.DoctorBO;
 import lk.ijse.animal_clinic.dto.DoctorDto;
 import lk.ijse.animal_clinic.dto.tm.DoctorTm;
-import lk.ijse.animal_clinic.model.DoctorModel;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.List;

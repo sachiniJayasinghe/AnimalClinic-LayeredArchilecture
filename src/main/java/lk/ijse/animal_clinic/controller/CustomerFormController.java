@@ -21,7 +21,6 @@ import lk.ijse.animal_clinic.bo.CustomerBOImpl;
 import lk.ijse.animal_clinic.bo.custom.CustomerBO;
 import lk.ijse.animal_clinic.dto.customerDto;
 import lk.ijse.animal_clinic.dto.tm.CustomerTm;
-import lk.ijse.animal_clinic.model.CustomerModel;
 
 import java.io.IOException;
 import java.sql.SQLException;

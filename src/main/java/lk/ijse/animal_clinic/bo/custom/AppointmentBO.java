@@ -19,12 +19,12 @@ public interface AppointmentBO extends SuperBO {
     boolean delete(String id) throws SQLException, ClassNotFoundException ;
     String generateNewID() throws SQLException, ClassNotFoundException ;
     AppointmentDto search(String id) throws SQLException, ClassNotFoundException ;
-     ArrayList<PetDto> getAllPets() throws SQLException, ClassNotFoundException ;
-     ArrayList<DoctorDto> getAllDoctor() throws SQLException, ClassNotFoundException ;
+    ArrayList<PetDto> getAllPets() throws SQLException, ClassNotFoundException ;
+    ArrayList<DoctorDto> getAllDoctor() throws SQLException, ClassNotFoundException ;
 
-     AppointmentDto loadNumber(String doctorID) throws SQLException, ClassNotFoundException ;
-     DoctorDto loadTime(String doctorID) throws SQLException, ClassNotFoundException;
-     customerDto loadAll(String appId) throws SQLException, ClassNotFoundException;
+    AppointmentDto loadNumber(String doctorID) throws SQLException, ClassNotFoundException ;
+    DoctorDto loadTime(String doctorID) throws SQLException, ClassNotFoundException;
+    customerDto loadAll(String appId) throws SQLException, ClassNotFoundException;
 
-    }
+}
 //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

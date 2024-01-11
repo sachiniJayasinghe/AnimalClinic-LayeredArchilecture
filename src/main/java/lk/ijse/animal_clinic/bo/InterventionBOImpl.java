@@ -1,19 +1,13 @@
 package lk.ijse.animal_clinic.bo;
 
-import lk.ijse.animal_clinic.bo.custom.AppointmentBO;
 import lk.ijse.animal_clinic.bo.custom.InterventionBO;
 import lk.ijse.animal_clinic.dao.DAOFactory;
 import lk.ijse.animal_clinic.dao.custom.*;
-import lk.ijse.animal_clinic.dao.custom.impl.CustomerDAOImpl;
-import lk.ijse.animal_clinic.dao.custom.impl.PaymentDAOImpl;
-import lk.ijse.animal_clinic.dao.custom.impl.ThreatmentDAOImpl;
-import lk.ijse.animal_clinic.dao.custom.impl.ThreatmentDetailDAOImpl;
 import lk.ijse.animal_clinic.db.DbConnection;
 import lk.ijse.animal_clinic.dto.AppointmentDto;
 import lk.ijse.animal_clinic.dto.ThreatmentDetailsDto;
 import lk.ijse.animal_clinic.dto.TreatementDto;
 import lk.ijse.animal_clinic.dto.customerDto;
-import lk.ijse.animal_clinic.model.ThreatmentDetailModel;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,12 +17,10 @@ public class InterventionBOImpl implements InterventionBO {
 
     ThreatmentDetailDAO threatmentDetailDAO =  (ThreatmentDetailDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ThreatmentDetails);
     PaymentDAO paymentDAO = (PaymentDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Payment);
-
     CustomerDAO customerDAO= (CustomerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Customer);
-
     ThreatmentDAO threatmentDAO = (ThreatmentDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Threatement);
     AppointmentDAO appointmentDAO = (AppointmentDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Appointement);
-
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.Query);
     @Override
     public boolean savePayment(String value, String threatmentId, String loadPayementID, double total) throws SQLException {
 
@@ -37,7 +29,6 @@ public class InterventionBOImpl implements InterventionBO {
             con = DbConnection.getInstance().getConnection();
             con.setAutoCommit(false);
 
-            var threatmentDetailsModel = new ThreatmentDetailModel();
             var dto = new ThreatmentDetailsDto(
                     value,
                     threatmentId,
@@ -102,10 +93,13 @@ public class InterventionBOImpl implements InterventionBO {
     public List<TreatementDto> getAllTreatement() throws SQLException, ClassNotFoundException {
         return threatmentDAO.getAll();
     }
-
     @Override
     public int searchPaymentId() throws SQLException {
         return paymentDAO.searchPaymentId();
+    }
+
+    public String getCustomerId(String value) throws SQLException, ClassNotFoundException {
+        return queryDAO.getCustomerId(value);
     }
 
 

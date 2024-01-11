@@ -16,7 +16,6 @@ import lk.ijse.animal_clinic.bo.EditProfileBOImpl;
 import lk.ijse.animal_clinic.bo.custom.ConfirmPasswordBO;
 import lk.ijse.animal_clinic.bo.custom.EditProfileBO;
 import lk.ijse.animal_clinic.dto.UserDto;
-import lk.ijse.animal_clinic.model.UserModel;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

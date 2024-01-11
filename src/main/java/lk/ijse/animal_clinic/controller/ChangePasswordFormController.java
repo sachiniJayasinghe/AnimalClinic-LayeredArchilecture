@@ -11,7 +11,6 @@ import javafx.util.Duration;
 import lk.ijse.animal_clinic.bo.BOFactory;
 import lk.ijse.animal_clinic.bo.ChangePasswordBOImpl;
 import lk.ijse.animal_clinic.bo.custom.ChangePasswordBO;
-import lk.ijse.animal_clinic.model.UserModel;
 
 import java.sql.SQLException;
 

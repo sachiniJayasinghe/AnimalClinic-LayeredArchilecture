@@ -19,10 +19,6 @@ import lk.ijse.animal_clinic.dto.SalaryDto;
 import lk.ijse.animal_clinic.dto.customerDto;
 import lk.ijse.animal_clinic.dto.tm.AppointmentTm;
 import lk.ijse.animal_clinic.dto.tm.SalaryTm;
-import lk.ijse.animal_clinic.model.AppointmentModel;
-import lk.ijse.animal_clinic.model.CustomerModel;
-import lk.ijse.animal_clinic.model.EmployeeModel;
-import lk.ijse.animal_clinic.model.SalaryModel;
 
 import java.sql.Date;
 import java.sql.SQLException;

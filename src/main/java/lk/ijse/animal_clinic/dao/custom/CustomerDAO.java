@@ -12,13 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface CustomerDAO  extends CrudDAO<customerDto> {
-
-    customerDto loadAll(String appId) throws SQLException, ClassNotFoundException ;
     public int getCustomerCount() throws SQLException, ClassNotFoundException;
 
-
-
-
-
-    }
+}
 

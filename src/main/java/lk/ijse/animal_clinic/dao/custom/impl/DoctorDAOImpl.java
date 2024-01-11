@@ -85,28 +85,33 @@ public class DoctorDAOImpl implements DoctorDAO {
                 return resultSet.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle or log the exception as needed
+            e.printStackTrace();
         }
         return 0;
     }
     @Override
     public DoctorDto loadTime(String doctorID) throws SQLException, ClassNotFoundException {
-        String sql ="select * from doctor where doctor_id=?";
+        String sql = "SELECT * FROM doctor WHERE doctor_id=?";
+        System.out.println("doctorID: " + doctorID);
 
-        ResultSet resultSet = SQLUtil.execute(sql,doctorID);
-
+        Object result = SQLUtil.execute(sql, doctorID);
         DoctorDto dto = null;
-        if(resultSet.next()){
-            String id = resultSet.getString(1);
-            String name = resultSet.getString(2);
-            String tel = resultSet.getString(3);
-            String address = resultSet.getString(4);
-            String e_mail = resultSet.getString(5);
-            Time comeInTime = resultSet.getTime(6);
-            Time outTime = resultSet.getTime(7);
 
-            dto = new DoctorDto(id, name, tel,address,e_mail,comeInTime,outTime);
+        if (result instanceof ResultSet) {
+            ResultSet resultSet = (ResultSet) result;
+            if (resultSet.next()) {
+                String id = resultSet.getString(1);
+                String name = resultSet.getString(2);
+                String tel = resultSet.getString(3);
+                String address = resultSet.getString(4);
+                String e_mail = resultSet.getString(5);
+                Time comeInTime = resultSet.getTime(6);
+                Time outTime = resultSet.getTime(7);
+
+                dto = new DoctorDto(id, name, tel, address, e_mail, comeInTime, outTime);
+            }
         }
-        return  dto;
+        return dto;
     }
+
 }

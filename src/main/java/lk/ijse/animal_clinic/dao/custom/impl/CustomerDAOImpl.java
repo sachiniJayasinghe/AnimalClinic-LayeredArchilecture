@@ -95,25 +95,5 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
     }
-    @Override
-
-    public customerDto loadAll(String appId) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT c.* FROM customer c JOIN pet p ON c.cus_id = p.cus_id JOIN appointements a ON p.pet_id = a.pet_id WHERE a.app_id = ?";
-        ResultSet resultSet = SQLUtil.execute(sql, appId);
-
-        customerDto dto = null;
-
-        if (resultSet.next()) {
-            String cus_id = resultSet.getString(1);
-            String name = resultSet.getString(2);
-            String tel = resultSet.getString(3);
-            String e_mail = resultSet.getString(4);
-            String address = resultSet.getString(5);
-
-            dto = new customerDto(cus_id, name, tel, e_mail, address);
-        }
-
-        return dto;
-    }
 
 }

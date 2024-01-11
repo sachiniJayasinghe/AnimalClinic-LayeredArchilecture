@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
-import lk.ijse.animal_clinic.bo.AppointementBOImpl;
 import lk.ijse.animal_clinic.bo.BOFactory;
 import lk.ijse.animal_clinic.bo.custom.AppointmentBO;
 import lk.ijse.animal_clinic.db.DbConnection;
@@ -22,11 +21,6 @@ import lk.ijse.animal_clinic.dto.DoctorDto;
 import lk.ijse.animal_clinic.dto.PetDto;
 import lk.ijse.animal_clinic.dto.customerDto;
 import lk.ijse.animal_clinic.dto.tm.AppointmentTm;
-import lk.ijse.animal_clinic.dto.tm.CustomerTm;
-import lk.ijse.animal_clinic.model.AppointmentModel;
-import lk.ijse.animal_clinic.model.CustomerModel;
-import lk.ijse.animal_clinic.model.DoctorModel;
-import lk.ijse.animal_clinic.model.PetModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -101,8 +95,6 @@ public class AppointmentFormController {
 
     @FXML
     private JFXComboBox<String> cmbPetId;
-
-    DoctorModel doctorModel;
 
     DoctorDto doctorDto;
 
@@ -219,12 +211,11 @@ public class AppointmentFormController {
         String app_id = txtId.getText();
         String doctor_id = cmbDoctorId.getValue();
         String pet_id = cmbPetId.getValue();
-        Date Date = java.sql.Date.valueOf(txtDate.getValue());
-        Time Time = java.sql.Time.valueOf(LocalTime.now());
+        Date date = java.sql.Date.valueOf(txtDate.getValue());
+        Time Time = java.sql.Time.valueOf(txtTime.getText());
         int Number = Integer.parseInt(txtNumber.getText());
 
-        var dto = new AppointmentDto(app_id, doctor_id, pet_id, Date, Time, Number);
-
+        var dto = new AppointmentDto(app_id, doctor_id, pet_id, date, Time, Number);
 
         try {
             boolean isSaved = appointmentBO.save(dto);
@@ -300,42 +291,45 @@ public class AppointmentFormController {
     @FXML
     void cmbDoctorIdOnAction(ActionEvent event) {
         try {
-            String doctorID = cmbDoctorId.getValue();;
+            String doctorID = cmbDoctorId.getValue();
             appointmentDto = appointmentBO.loadNumber(doctorID);
-            if (appointmentDto==null){
+
+            if (appointmentDto == null) {
                 txtNumber.setText("1");
-            }else{
-                txtNumber.setText(String.valueOf(appointmentDto.getNumber()+1));
+            } else {
+                txtNumber.setText(String.valueOf(appointmentDto.getNumber() + 1));
             }
+
             doctorDto = appointmentBO.loadTime(doctorID);
             System.out.println(doctorDto.getOutTime());
-            Time outTime = doctorDto.getOutTime();
 
-            int num = Integer.parseInt(txtNumber.getText());
-            int addTime = num*(15);
-            Time time = doctorDto.getComeInTime();
-            LocalTime localTime = time.toLocalTime();
-            LocalTime newTime = localTime.plusMinutes(addTime);
-            Time updatedTime = Time.valueOf(newTime);
-            txtTime.setText(String.valueOf(updatedTime));
+            if (doctorDto != null) {
+                Time outTime = doctorDto.getOutTime();
 
+                int num = Integer.parseInt(txtNumber.getText());
+                int addTime = num * 15;
 
-            if (outTime != null && outTime.before(updatedTime)) {
-                new Alert(Alert.AlertType.ERROR, doctorDto.getName() + " is not available").show();
-                txtNumber.setText("");
-                txtTime.setText("");
+                Time comeInTime = doctorDto.getComeInTime();
+                LocalTime localComeInTime = comeInTime.toLocalTime();
+                LocalTime newTime = localComeInTime.plusMinutes(addTime);
+                Time updatedTime = Time.valueOf(newTime);
+
+                if (outTime != null && outTime.before(updatedTime)) {
+                    new Alert(Alert.AlertType.ERROR, doctorDto.getName() + " is not available").show();
+                    txtNumber.setText("");
+                    txtTime.setText("");
+                } else {
+                    txtTime.setText(String.valueOf(updatedTime));
+                }
             } else {
-                txtTime.setText(String.valueOf(updatedTime));
+                new Alert(Alert.AlertType.ERROR, "Doctor information not found").show();
             }
-
-
-
-        }catch (SQLException e){
+        } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            System.out.println(e.getMessage());
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @FXML

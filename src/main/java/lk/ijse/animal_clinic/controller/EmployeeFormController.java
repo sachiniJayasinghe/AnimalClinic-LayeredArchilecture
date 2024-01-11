@@ -19,9 +19,7 @@ import lk.ijse.animal_clinic.dto.EmployeeDto;
 import lk.ijse.animal_clinic.dto.customerDto;
 import lk.ijse.animal_clinic.dto.tm.CustomerTm;
 import lk.ijse.animal_clinic.dto.tm.EmployeeTm;
-import lk.ijse.animal_clinic.model.CustomerModel;
-import lk.ijse.animal_clinic.model.DoctorModel;
-import lk.ijse.animal_clinic.model.EmployeeModel;
+
 
 import java.sql.SQLException;
 import java.util.List;
@@ -131,7 +129,6 @@ public class EmployeeFormController {
 
         String emp_id = txtEmployeeId.getText();
 
-        var model = new EmployeeModel();
         try {
             boolean isDeleted = employeeBO.delete(emp_id);
             tblEmployee.refresh();

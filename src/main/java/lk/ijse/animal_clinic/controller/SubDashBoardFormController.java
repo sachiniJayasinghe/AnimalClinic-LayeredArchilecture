@@ -15,9 +15,7 @@ import lk.ijse.animal_clinic.bo.PetBOImpl;
 import lk.ijse.animal_clinic.bo.custom.CustomerBO;
 import lk.ijse.animal_clinic.bo.custom.DoctorBO;
 import lk.ijse.animal_clinic.bo.custom.PetBO;
-import lk.ijse.animal_clinic.model.CustomerModel;
-import lk.ijse.animal_clinic.model.DoctorModel;
-import lk.ijse.animal_clinic.model.PetModel;
+
 import lombok.SneakyThrows;
 
 import java.net.URL;

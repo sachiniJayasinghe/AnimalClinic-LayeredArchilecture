@@ -12,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import lk.ijse.animal_clinic.model.UserModel;
 
 import java.io.File;
 import java.io.FileInputStream;

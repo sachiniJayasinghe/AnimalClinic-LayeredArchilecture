@@ -23,7 +23,6 @@ import lk.ijse.animal_clinic.db.DbConnection;
 import lk.ijse.animal_clinic.dto.*;
 import lk.ijse.animal_clinic.dto.tm.DoctorTm;
 import lk.ijse.animal_clinic.dto.tm.ThreatmentDetailTm;
-import lk.ijse.animal_clinic.model.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -89,7 +88,7 @@ public class InterventionFormController {
 
     static double total = 0;
 
- InterventionBO interventionBO = (InterventionBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.InterventionBO);
+    InterventionBO interventionBO = (InterventionBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.InterventionBO);
     public void initialize()  {
         loadAppointmentIds();
         loadTreatmentType();
@@ -117,8 +116,7 @@ public class InterventionFormController {
             cmbAppointmentID.getSelectionModel().clearSelection();
             txtTotal.clear();
             tblTreatementDetals.getItems().clear();
-            ThreatmentDetailModel ob = new ThreatmentDetailModel();
-            String customerId = ob.getCustomerId(app_id);
+            String customerId = interventionBO.getCustomerId(app_id);
             try {
                 customerDto dto = interventionBO.search(customerId);
 
@@ -163,8 +161,6 @@ public class InterventionFormController {
             e.printStackTrace();
         }
     }
-
-
     @FXML
     void btnViewBillOnAction(ActionEvent event) throws SQLException {
         try {

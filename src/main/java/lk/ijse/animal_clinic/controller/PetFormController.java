@@ -22,9 +22,6 @@ import lk.ijse.animal_clinic.dto.PetDto;
 import lk.ijse.animal_clinic.dto.customerDto;
 import lk.ijse.animal_clinic.dto.tm.CustomerTm;
 import lk.ijse.animal_clinic.dto.tm.PetTm;
-import lk.ijse.animal_clinic.model.AppointmentModel;
-import lk.ijse.animal_clinic.model.CustomerModel;
-import lk.ijse.animal_clinic.model.PetModel;
 
 import java.sql.SQLException;
 import java.util.List;

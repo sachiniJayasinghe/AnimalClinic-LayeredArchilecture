@@ -17,9 +17,7 @@ import lk.ijse.animal_clinic.dto.TreatementDto;
 import lk.ijse.animal_clinic.dto.tm.AppointmentTm;
 import lk.ijse.animal_clinic.dto.tm.vaccinationsTm;
 import lk.ijse.animal_clinic.dto.vaccinationsDto;
-import lk.ijse.animal_clinic.model.AppointmentModel;
-import lk.ijse.animal_clinic.model.TreatementModel;
-import lk.ijse.animal_clinic.model.VaccinationModel;
+
 
 import java.sql.Date;
 import java.sql.SQLException;

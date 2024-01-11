@@ -46,23 +46,6 @@ public class ThreatmentDetailDAOImpl implements ThreatmentDetailDAO {
         return null;
     }
 
-    @Override
-    public String getCustomerId(String value) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT c.cus_id FROM treatementDetails td " +
-                "JOIN appointements a ON td.app_id = a.app_id " +
-                "JOIN pet p ON a.pet_id = p.pet_id " +
-                "JOIN customer c ON p.cus_id = c.cus_id " +
-                "WHERE td.app_id = ?";
-
-        ResultSet resultSet = SQLUtil.execute(sql, value);
-
-        String id = null;
-        if (resultSet.next()) {
-            id = resultSet.getString("cus_id");
-        }
-
-        return id;
-    }
 
     @Override
     public List<ThreatmentDetailsDto> extractThreatmentDetailsDtoList(ResultSet resultSet) throws SQLException {

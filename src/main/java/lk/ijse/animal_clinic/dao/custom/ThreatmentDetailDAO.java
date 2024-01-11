@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ThreatmentDetailDAO extends CrudDAO<ThreatmentDetailsDto> {
-    public String getCustomerId(String value) throws SQLException, ClassNotFoundException ;
       List<ThreatmentDetailsDto> extractThreatmentDetailsDtoList(ResultSet resultSet) throws SQLException ;
 
     }
